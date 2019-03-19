@@ -24,7 +24,8 @@ class Categoria{
     // select all query
     $query = "SELECT idCategoria, descripcion, idCategoriaSuperiorFK as 'superior'
                 FROM " . $this->table_name . " 
-                WHERE idCategoriaSuperiorFK is not null";
+                WHERE idCategoriaSuperiorFK is not null
+                ORDER BY descripcion asc";
 
     // prepare query statement
     $stmt = $this->conn->prepare($query);
