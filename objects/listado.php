@@ -9,6 +9,7 @@ class Listado{
  
     // object properties
     public $idListado;
+    public $idCat;
     public $fechaCreacion;
     public $fechaCobro;
     public $fechaCompra;
@@ -16,6 +17,7 @@ class Listado{
     public $nombre;
     public $producto;
     public $cantidad;
+    public $filas;
     public $username;
 
     public $queryParam;
@@ -25,8 +27,8 @@ class Listado{
         
     }
 
-    // read data
-    function readData(){
+// read data
+function readData(){
 
     // select all query
     $query = "SELECT li.idListado, li.nombre, p.descripcion AS 'producto', lp.cant AS 'cantidad', c.username as 'cliente' 
@@ -65,8 +67,8 @@ class Listado{
         return $stmt;
     }
 
-        // read list products name
-        function readProductsList($id){
+// read list products name
+function readProductsList($id){
 
             // select all query
             $query = "SELECT p.descripcion FROM " . $this->table_name . " li 
@@ -83,9 +85,11 @@ class Listado{
             return $stmt;
         }
 
+
+
 //Creamos el listado de compras en la tabla listado
 function createName(){
-    
+
     //Existe el listado?
     if($this->listExist()){
         return false;
@@ -95,7 +99,7 @@ function createName(){
 	$query = "INSERT INTO
     " . $this->table_name . "
     (`idListado`, `fechaCreacion`, `fechaCobro`, `fechaCompra`, `nombre`) VALUES
-    (NULL, '".$this->fechaCreacion."', '".$this->fechaCobro."', '".$this->fechaCompra."', '".$this->nombre."')";
+    (NULL, curdate(), '".$this->fechaCobro."', '".$this->fechaCompra."', '".$this->nombre."')";
 
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
@@ -108,34 +112,53 @@ function createName(){
 
     // bind the values
     $stmt->bindParam(':fechaCreacion', $this->fechaCreacion);
-    $stmt->bindParam(':fechaCobro', $fechaCobro);
+    $stmt->bindParam(':fechaCobro', $this->$fechaCobro);
     $stmt->bindParam(':fechaCompra', $this->fechaCompra);
     $stmt->bindParam(':nombre', $this->nombre);
 
 
     //Ejecutamos el script y corroboramos si la query esta OK
     if($stmt->execute()){
-    
-        $stmt->bindParam(':idListado', $this->idListado);
-    
+
         return true;
     }
 
     return false;
-    }
 }
 
+
 function getId(){
+    // select all query
+    $query = "SELECT idListado FROM " . $this->table_name . " 
+    WHERE nombre like '".$this->nombre."'";
+
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+ 
+    // execute query
+    $stmt->execute();
+
+    //Creamos vector
+    $list_arr=array();
+    //Extraemos el resultado
+    extract($stmt->fetch(PDO::FETCH_ASSOC));
+    //Lo metemos en un vector nuevo
+    $list_item=array(
+        //Tomamos el dato y lo guardamos en la variable
+        "idListado" => $idListado
+    );
+    array_push($list_arr, $list_item);
+ 
     return $idListado;
 }
 
     //Existe el nombre de la lista?
 function listExist(){
- 
+
     //Chequear si existe el usuario
     $query = "SELECT *
             FROM " . $this->table_name . "
-            WHERE nombre = '".$this->nombre."'";
+            WHERE nombre like '".$this->nombre."'";
  
     //Preparamos query
     $stmt = $this->conn->prepare( $query );
@@ -156,54 +179,33 @@ function listExist(){
     if($num>0){
         
         // False porque existe en la DB
-        return false;
+        return true;
     }
  
     // True porque no existe en la DB
-    return true;
+    return false;
 }
 
 //Creamos el listado de compras en la tabla listadoxsubcategorias
-function createCategory($id, $filas){
-
-    //Array to keep track of errors
-	$my_errors = array();
-
-    for($count = 0; $count < sizeof($filas); $count++)
-    {
-        if(!empty($filas[$count]))
-        {
-            $student = mysql_real_escape_string($id[$count]);
-            $mark = mysql_real_escape_string($score[$count]);
-            
-            $query = "INSERT INTO try (id, score) VALUES('".$student."',$mark)";
-            if(!mysql_query($query))
-            {
-                $my_errors[] = $id[$count];
-            }
-        }
-    }
-
+function createCategory($array_cat){
+    
     //Insertamos query
-	$query = "INSERT INTO listadoxsubcategorias
-    (`idListadoxsubcate`, `idListado`, `idCat`) VALUES
-    (NULL, '".$this->fechaCreacion."', '".$this->fechaCobro."', '".$this->fechaCompra."', '".$this->nombre."')";
+	$query = "INSERT INTO listadoxsubcategoria
+    (`idListado`, `idCat`) VALUES ";
 
+    for($i = 0; $i < $this->filas; $i++){
+
+        $query .= "('".$this->idListado."','".$array_cat[$i]."')";
+        
+        if($i != $this->filas-1){
+            //Con esto manejamos el uso de las comas entre cada VALUE
+            $query .= ",";
+        }
+
+    }
+    
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
-
-    // sanitize
-    $this->fechaCreacion=htmlspecialchars(strip_tags($this->fechaCreacion));
-    $this->fechaCobro=htmlspecialchars(strip_tags($this->fechaCobro));
-    $this->fechaCompra=htmlspecialchars(strip_tags($this->fechaCompra));
-    $this->nombre=htmlspecialchars(strip_tags($this->nombre));
-
-    // bind the values
-    $stmt->bindParam(':fechaCreacion', $this->fechaCreacion);
-    $stmt->bindParam(':fechaCobro', $fechaCobro);
-    $stmt->bindParam(':fechaCompra', $this->fechaCompra);
-    $stmt->bindParam(':nombre', $this->nombre);
-
 
     //Ejecutamos el script y corroboramos si la query esta OK
     if($stmt->execute()){
@@ -212,7 +214,7 @@ function createCategory($id, $filas){
 
     return false;
     }
-}
 
 }
+
 ?>

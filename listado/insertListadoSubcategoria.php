@@ -9,11 +9,17 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 
 //Obtener archivos para la conexion
-include_once 'config/database.php';
-include_once 'objects/listado.php';
+include_once '../config/database.php';
+include_once '../objects/listado.php';
 
 //Obtener datos de POST desde un JSON
-$data = json_decode(file_get_contents("php://input"));
+$data = json_decode(file_get_contents("php://input"), true);
+
+//Creamos el vector solamente con los idCat total el idListado es igual para todos
+$array_cat;
+for($i=0;$i<count($data);$i++){
+    $array_cat[$i] = $data[$i]['idCat'];
+}
 
 //Corroboramos primero que se hayan ingresados datos
 if($data != NULL){
@@ -21,28 +27,20 @@ if($data != NULL){
     $database = new Database();
     $db = $database->getConnection();
 
-    //Instanciar cliente
+    //Instanciar listado
     $listado = new Listado($db);
 
-    // Setear valored de listado
-    $listado->fechaCreacion = $data->fechaCreacion;
-    $listado->fechaCobro = $data->fechaCobro;
-    $listado->fechaCompra = $data->fechaCompra;
-    $listado->nombre = $data->nombre;
-    $listado->filas = $data->filas;
-
+    // Setear valores de listado
+    $listado->idListado = $data[0]['idListado'];
+    $listado->filas = count($data);
     //Creamos el listado
-    if($listado->createName()){
-        $id = $listado->getId();
-        $filas = $listado->getFilas();
+    if($listado->createCategory($array_cat)){
 
-        if($listado->createCategory($id, $filas)){
             // set response code
             http_response_code(200);
 
             //Mostramos mensaje
-            echo json_encode(array("message" => "Listado creado!"));
-        }
+            echo json_encode(array("message" => "Productos agregados!"));
         
     }
 
@@ -52,7 +50,7 @@ if($data != NULL){
         //Seteamos estado
         http_response_code(400);
 
-        echo json_encode(array("message" => "El listado ya existe"));
+        echo json_encode(array("message" => "Productos repetidos!"));
     }
 }
 else{

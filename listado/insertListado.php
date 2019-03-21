@@ -9,8 +9,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 
 //Obtener archivos para la conexion
-include_once 'config/database.php';
-include_once 'objects/listado.php';
+include_once '../config/database.php';
+include_once '../objects/listado.php';
 
 //Obtener datos de POST desde un JSON
 $data = json_decode(file_get_contents("php://input"));
@@ -21,7 +21,7 @@ if($data != NULL){
     $database = new Database();
     $db = $database->getConnection();
 
-    //Instanciar cliente
+    //Instanciar listado
     $listado = new Listado($db);
 
     // Setear valored de listado
@@ -38,7 +38,7 @@ if($data != NULL){
             http_response_code(200);
 
             //Mostramos mensaje
-            echo json_encode(array("message" => "Listado creado!", "idListado" => "$id"));
+            echo json_encode(array("idListado" => $id));
         
     }
 
@@ -48,12 +48,12 @@ if($data != NULL){
         //Seteamos estado
         http_response_code(400);
 
-        echo json_encode(array("message" => "El listado ya existe"));
+        //echo json_encode(array("message" => "El listado ya existe"));
     }
 }
 else{
     //Seteamos estado
     http_response_code(400);
-    echo json_encode(array("message" => "Se requieren datos"));
+    //echo json_encode(array("message" => "Se requieren datos"));
 }
 ?>
