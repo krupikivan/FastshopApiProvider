@@ -90,11 +90,6 @@ function readProductsList($id){
 //Creamos el listado de compras en la tabla listado
 function createName(){
 
-    //Existe el listado?
-    if($this->listExist()){
-        return false;
-    }
-
     //Insertamos query
 	$query = "INSERT INTO
     " . $this->table_name . "
@@ -152,40 +147,7 @@ function getId(){
     return $idListado;
 }
 
-    //Existe el nombre de la lista?
-function listExist(){
-
-    //Chequear si existe el usuario
-    $query = "SELECT *
-            FROM " . $this->table_name . "
-            WHERE nombre like '".$this->nombre."'";
- 
-    //Preparamos query
-    $stmt = $this->conn->prepare( $query );
- 
-    //Sanitizar
-    $this->nombre=htmlspecialchars(strip_tags($this->nombre));
- 
-    //Enlazamos valores
-    $stmt->bindParam(1, $this->nombre);
- 
-    //Ejecutamos query
-    $stmt->execute();
- 
-    //Numero de filas
-    $num = $stmt->rowCount();
- 
-    // Si existe asignamos valores al objeto (lo podemos usar para manejo de sesiones)
-    if($num>0){
-        
-        // False porque existe en la DB
-        return true;
-    }
- 
-    // True porque no existe en la DB
-    return false;
-}
-
+    
 //Creamos el listado de compras en la tabla listadoxsubcategorias
 function createCategory($array_cat){
     
