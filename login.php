@@ -35,10 +35,12 @@ if($data->username && $data->password){
     $cliente->username = $data->username;
     $cliente_exist = $cliente->clientExist();
     
+    
     //Chequeamos si existe cliente y la contra es valida
     if($cliente_exist && password_verify($data->password, $cliente->password)){
     
         $cliente_name = $cliente->getUsername();
+        $cliente_id = $cliente->getId();
         $token = array(
         "iss" => $iss,
         "aud" => $aud,
@@ -47,6 +49,7 @@ if($data->username && $data->password){
         "data" => array(
             "username" => $cliente->username,
             "password" => $cliente->password,
+            "idCliente" => $cliente->idCliente,
         )
         );
     
@@ -57,7 +60,8 @@ if($data->username && $data->password){
                 array(
                     "username" => $cliente_name,
                     //"message" => "Login exitoso.",
-                    "jwt" => $jwt
+                    "jwt" => $jwt,
+                    "idCliente" => $cliente_id
                 )
             );
     }

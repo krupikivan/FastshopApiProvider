@@ -119,6 +119,10 @@ function getUsername(){
     return $this->username;
 }
 
+function getId(){
+    return $this->idCliente;
+}
+
 //Login Cliente
 function login(){
     //Seleccionar todas las query
