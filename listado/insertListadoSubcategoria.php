@@ -18,7 +18,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 //Creamos el vector solamente con los idCat total el idListado es igual para todos
 $array_cat;
 for($i=0;$i<count($data);$i++){
-    $array_cat[$i] = $data[$i]['idCat'];
+    $array_cat[$i] = $data[$i]['idCategoria'];
 }
 
 //Corroboramos primero que se hayan ingresados datos
@@ -40,7 +40,7 @@ if($data != NULL){
             http_response_code(200);
 
             //Mostramos mensaje
-            echo json_encode(array("message" => "Productos agregados!"));
+            echo json_encode(array("idListado" => $listado->idListado ));
         
     }
 
@@ -50,7 +50,7 @@ if($data != NULL){
         //Seteamos estado
         http_response_code(400);
 
-        echo json_encode(array("message" => "Productos repetidos!"));
+        echo json_encode(array("message" => "Categorias repetidas!"));
     }
 }
 else{

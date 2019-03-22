@@ -115,6 +115,40 @@ function clientExist(){
     return false;
 }
 
+//Devolvemos el id mandando el usuario
+function getIdForUsername($username){
+ 
+    //Chequear si existe el usuario
+    $query = "SELECT idCliente
+            FROM " . $this->table_name . "
+            WHERE username like '".$username."'";
+ 
+    //Preparamos query
+    $stmt = $this->conn->prepare( $query );
+
+    //Ejecutamos query
+    $stmt->execute();
+ 
+    //Numero de filas
+    $num = $stmt->rowCount();
+
+    // Si existe asignamos valores al objeto (lo podemos usar para manejo de sesiones)
+    if($num>0){
+
+        // Traemos valores
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+        //Asignamos valores
+        $this->idCliente = $row['idCliente'];
+
+        // True porque existe en la DB
+        return $this->idCliente;
+    }
+ 
+    // False porque no existe en la DB
+    return '';
+}
+
 function getUsername(){
     return $this->username;
 }

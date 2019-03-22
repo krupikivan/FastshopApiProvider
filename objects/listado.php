@@ -9,11 +9,11 @@ class Listado{
  
     // object properties
     public $idListado;
-    public $idCat;
+    public $idCategoria;
     public $fechaCreacion;
     public $fechaCobro;
     public $fechaCompra;
-    public $cliente;
+    public $idCliente;
     public $nombre;
     public $producto;
     public $cantidad;
@@ -94,21 +94,17 @@ function createName(){
 	$query = "INSERT INTO
     " . $this->table_name . "
     (`idListado`, `fechaCreacion`, `fechaCobro`, `fechaCompra`, `nombre`) VALUES
-    (NULL, curdate(), '".$this->fechaCobro."', '".$this->fechaCompra."', '".$this->nombre."')";
+    (NULL, curdate(), NULL, NULL, '".$this->nombre."')";
 
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
 
     // sanitize
     $this->fechaCreacion=htmlspecialchars(strip_tags($this->fechaCreacion));
-    $this->fechaCobro=htmlspecialchars(strip_tags($this->fechaCobro));
-    $this->fechaCompra=htmlspecialchars(strip_tags($this->fechaCompra));
     $this->nombre=htmlspecialchars(strip_tags($this->nombre));
 
     // bind the values
     $stmt->bindParam(':fechaCreacion', $this->fechaCreacion);
-    $stmt->bindParam(':fechaCobro', $this->$fechaCobro);
-    $stmt->bindParam(':fechaCompra', $this->fechaCompra);
     $stmt->bindParam(':nombre', $this->nombre);
 
 
@@ -121,6 +117,35 @@ function createName(){
     return false;
 }
 
+//Creamos el listadoXCliente
+function createListXClien(){
+
+    //Insertamos query
+	$query = "INSERT INTO
+    listadoxconsumidores
+    (`idListadoxCliente`, `idCliente`, `idListado`) VALUES
+    (NULL, '".$this->idCliente."', '".$this->idListado."')";
+
+    //Preparamos la query
+    $stmt = $this->conn->prepare($query);
+
+    // sanitize
+    $this->idCliente=htmlspecialchars(strip_tags($this->idCliente));
+    $this->idListado=htmlspecialchars(strip_tags($this->idListado));
+
+    // bind the values
+    $stmt->bindParam(':idCliente', $this->idCliente);
+    $stmt->bindParam(':idListado', $this->idListado);
+
+
+    //Ejecutamos el script y corroboramos si la query esta OK
+    if($stmt->execute()){
+
+        return true;
+    }
+
+    return false;
+}
 
 function getId(){
     // select all query
@@ -153,7 +178,7 @@ function createCategory($array_cat){
     
     //Insertamos query
 	$query = "INSERT INTO listadoxsubcategoria
-    (`idListado`, `idCat`) VALUES ";
+    (`idListado`, `idCategoria`) VALUES ";
 
     for($i = 0; $i < $this->filas; $i++){
 

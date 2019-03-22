@@ -24,18 +24,18 @@ if($data != NULL){
     //Instanciar listado
     $listado = new Listado($db);
 
-    // Setear valored de listado
-    $listado->nombre = $data->nombre;
+    // Setear valores de listado
+    $listado->idListado = $data->idListado;
+    $listado->idCliente = $data->idCliente;
 
     //Creamos el listado
-    if($listado->createName()){
-        $id = $listado->getId();
+    if($listado->createListXClien()){
 
             // set response code
             http_response_code(200);
 
             //Mostramos mensaje
-            echo json_encode(array("idListado" => $id, "nombre" => $listado->nombre));
+            echo json_encode(array("message" => "Agregado!"));
         
     }
 
@@ -45,14 +45,12 @@ if($data != NULL){
         //Seteamos estado
         http_response_code(400);
 
-        //El listado ya existe
-        echo json_encode(array("message" => "Exist"));
+        echo json_encode(array("message" => "No agregado!"));
     }
 }
 else{
     //Seteamos estado
     http_response_code(400);
-    //Se requieren datos
-    echo json_encode(array("message" => "Data"));
+    echo json_encode(array("message" => "Se requieren datos"));
 }
 ?>
