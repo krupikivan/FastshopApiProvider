@@ -25,9 +25,6 @@ if($data != NULL){
     $listado = new Listado($db);
 
     // Setear valored de listado
-    $listado->fechaCreacion = $data->fechaCreacion;
-    $listado->fechaCobro = $data->fechaCobro;
-    $listado->fechaCompra = $data->fechaCompra;
     $listado->nombre = $data->nombre;
 
     //Creamos el listado
@@ -48,12 +45,14 @@ if($data != NULL){
         //Seteamos estado
         http_response_code(400);
 
-        //echo json_encode(array("message" => "El listado ya existe"));
+        //El listado ya existe
+        echo json_encode(array("message" => "Exist"));
     }
 }
 else{
     //Seteamos estado
     http_response_code(400);
-    //echo json_encode(array("message" => "Se requieren datos"));
+    //Se requieren datos
+    echo json_encode(array("message" => "Data"));
 }
 ?>
