@@ -19,6 +19,7 @@ class Listado{
     public $cantidad;
     public $filas;
     public $username;
+    public $creado;
 
     public $queryParam;
     // constructor with $db as database connection
@@ -172,6 +173,31 @@ function getId(){
     return $idListado;
 }
 
+//Le marcamos en 1 la casilla creado de la tabla listado
+function getInsertExist(){
+
+    //Insertamos query
+	$query = "SELECT * FROM
+    " . $this->table_name . " l
+    JOIN listadoxcliente lc on lc.idListado = l.idListado
+    JOIN listadoxsubcategoria ls on ls.idListado = l.idListado
+    WHERE l.nombre like '".$this->nombre."'";
+
+    //Preparamos la query
+    $stmt = $this->conn->prepare($query);
+
+    // sanitize
+    $this->nombre=htmlspecialchars(strip_tags($this->nombre));
+
+    // bind the values
+    $stmt->bindParam(':nombre', $this->nombre);
+
+
+    //Ejecutamos el script y corroboramos si la query esta OK
+    $stmt->execute();
+
+    return $stmt;
+}
     
 //Creamos el listado de compras en la tabla listadoxsubcategorias
 function createCategory($array_cat){
