@@ -34,7 +34,7 @@ function readData(){
     $query = "SELECT li.idListado, li.nombre, p.descripcion AS 'producto', lp.cant AS 'cantidad', c.username as 'cliente' 
     FROM " . $this->table_name . " li 
     JOIN listadoxproductos lp ON lp.idListado = li.idListado
-    JOIN listadoxconsumidores lc ON lc.idListado = li.idListado
+    JOIN listadoxcliente lc ON lc.idListado = li.idListado
     JOIN productos p ON p.idProducto = lp.idProducto
     JOIN clientes c ON c.idCliente = lc.idCliente
     WHERE c.username like 'admin'
@@ -54,7 +54,7 @@ function readData(){
 
         // select all query
         $query = "SELECT li.idListado, li.nombre FROM " . $this->table_name . " li 
-        JOIN listadoxconsumidores lc ON lc.idListado = li.idListado 
+        JOIN listadoxcliente lc ON lc.idListado = li.idListado 
         JOIN clientes c ON c.idCliente = lc.idCliente 
         WHERE c.username = '".$username."'";
     
@@ -122,9 +122,9 @@ function createListXClien(){
 
     //Insertamos query
 	$query = "INSERT INTO
-    listadoxconsumidores
-    (`idListadoxCliente`, `idCliente`, `idListado`) VALUES
-    (NULL, '".$this->idCliente."', '".$this->idListado."')";
+    listadoxcliente
+    (`idCliente`, `idListado`) VALUES
+    ('".$this->idCliente."', '".$this->idListado."')";
 
     //Preparamos la query
     $stmt = $this->conn->prepare($query);

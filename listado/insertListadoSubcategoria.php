@@ -40,7 +40,7 @@ if($data != NULL){
             http_response_code(200);
 
             //Mostramos mensaje
-            echo json_encode(array("idListado" => $listado->idListado ));
+            echo json_encode($listado->idListado);
         
     }
 

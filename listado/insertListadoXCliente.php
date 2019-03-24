@@ -27,7 +27,7 @@ if($data != NULL){
     // Setear valores de listado
     $listado->idListado = $data->idListado;
     $listado->idCliente = $data->idCliente;
-
+    var_dump($data->idCliente);
     //Creamos el listado
     if($listado->createListXClien()){
 

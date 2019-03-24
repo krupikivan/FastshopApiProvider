@@ -27,9 +27,9 @@ if($id != NULL){
     http_response_code(200);
  
     // show products data in json format
-    echo json_encode(array("idCliente" => $id));
+    echo json_encode($id);
 }
- 
+
 else{
  
     // set response code - 404 Not found
