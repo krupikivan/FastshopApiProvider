@@ -36,5 +36,22 @@ class Categoria{
     return $stmt;
 }
 
+// read list categories name
+function readCategoriesList($id){
+
+    // select all query
+    $query = "SELECT c.descripcion FROM " . $this->table_name . " c 
+    JOIN listadoxsubcategoria ls ON ls.idCategoria = c.idCategoria 
+    WHERE ls.idListado = '".$id."'";
+
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+ 
+    // execute query
+    $stmt->execute();
+ 
+    return $stmt;
+}
+
 }
 ?>

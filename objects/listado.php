@@ -68,26 +68,6 @@ function readData(){
         return $stmt;
     }
 
-// read list products name
-function readProductsList($id){
-
-            // select all query
-            $query = "SELECT p.descripcion FROM " . $this->table_name . " li 
-            JOIN listadoxproductos lp ON lp.idListado = li.idListado 
-            JOIN productos p ON p.idProducto = lp.idProducto 
-            WHERE li.idListado = '".$id."'";
-        
-            // prepare query statement
-            $stmt = $this->conn->prepare($query);
-         
-            // execute query
-            $stmt->execute();
-         
-            return $stmt;
-        }
-
-
-
 //Creamos el listado de compras en la tabla listado
 function createName(){
 

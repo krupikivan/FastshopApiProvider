@@ -5,20 +5,20 @@ header("Content-Type: application/json; charset=UTF-8");
  
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/listado.php';
+include_once '../objects/categoria.php';
  
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
 // initialize object
-$list = new Listado($db);
+$list = new Categoria($db);
 
 //Tomamos el usuario activo dentro de la app
-$id = $_GET['id'];
+$id = $_GET['idListado'];
 
-// query products
+// query category
 
-$stmt = $list->readProductsList($id);
+$stmt = $list->readCategoriesList($id);
 
 $num = $stmt->rowCount();
 
@@ -59,7 +59,7 @@ else{
  
     // tell the user no products found
     echo json_encode(
-        array("message" => "No se encontraron listados del cliente")
+        array("message" => "No se encontraron categories del listado")
     );
 }
 ?>
