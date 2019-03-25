@@ -170,14 +170,14 @@ function getId(){
 }
 
 //Le marcamos en 1 la casilla creado de la tabla listado
-function getInsertExist(){
+function getList(){
 
     //Insertamos query
 	$query = "SELECT * FROM
     " . $this->table_name . " l
     JOIN listadoxcliente lc on lc.idListado = l.idListado
     JOIN listadoxsubcategoria ls on ls.idListado = l.idListado
-    WHERE l.nombre like '".$this->nombre."'";
+    WHERE l.idListado like '".$this->idListado."'";
 
     //Preparamos la query
     $stmt = $this->conn->prepare($query);

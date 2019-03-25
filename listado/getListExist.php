@@ -14,7 +14,7 @@ include_once '../objects/listado.php';
 
 //Obtener datos de POST desde un JSON
 //$data = json_decode(file_get_contents("php://input"));
-$data = $_GET['nombre'];
+$data = $_GET['idListado'];
 
 //Corroboramos primero que se hayan ingresados datos
 if($data != NULL){
@@ -26,13 +26,21 @@ if($data != NULL){
     $listado = new Listado($db);
 
     // Setear valored de nombre para buscar en el where
-    $listado->nombre = $data;
+    $listado->idListado = $data;
 
     //Ejecutamos
-    $stmt = $listado->getInsertExist();
+    $stmt = $listado->getList();
 
     //Contamos si hay filas encontradas
     $num = $stmt->rowCount();
+    
+    $list_arr=array();
+     
+            $list_item=array(
+                "idListado" => $id,
+                "nombre" => $listado->nombre,
+            );
+            array_push($list_arr, $list_item);
 
     // check if more than 0 record found
     if($num>0){
@@ -41,7 +49,7 @@ if($data != NULL){
         http_response_code(200);
     
         // show products data in json format
-        echo json_encode(true);
+        echo json_encode($list_arr)
     }
     
     else{
@@ -50,7 +58,7 @@ if($data != NULL){
         http_response_code(404);
     
         // tell the user no products found
-        echo json_encode(false);
+        echo json_encode($list_arr)
     }
 }
 else{

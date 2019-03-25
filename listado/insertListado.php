@@ -30,12 +30,21 @@ if($data != NULL){
     //Creamos el listado
     if($listado->createName()){
         $id = $listado->getId();
+        $list_arr=array();
+     
+            $list_item=array(
+                "idListado" => $id,
+                "nombre" => $listado->nombre,
+            );
+            array_push($list_arr, $list_item);
+            //Le tuve q sacar el api key porque no me traia las promociones
+            //array_push($promo_arr["PromocionesVigentes"], $promo_item);
 
             // set response code
             http_response_code(200);
 
             //Mostramos mensaje
-            echo json_encode(array("idListado" => $id, "nombre" => $listado->nombre));
+            echo json_encode($list_arr);
         
     }
 
@@ -46,13 +55,13 @@ if($data != NULL){
         http_response_code(400);
 
         //El listado ya existe
-        echo json_encode(array("message" => "Exist"));
+        echo json_encode(array("message" => "No se pudo cargar"));
     }
 }
 else{
     //Seteamos estado
     http_response_code(400);
     //Se requieren datos
-    echo json_encode(array("message" => "Data"));
+    echo json_encode(array("message" => "Error Data"));
 }
 ?>
