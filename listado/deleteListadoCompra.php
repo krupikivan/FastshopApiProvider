@@ -27,9 +27,8 @@ if($data != NULL){
     // Setear valores de listado
     $listado->idListado = $data;
 
-    //Creamos el listado
-    if($listado->deleteListadoCompra()){
-
+    //Eliminamos el listado
+    if($listado->deleteListCompra()){
             // set response code
             http_response_code(200);
 

@@ -15,13 +15,10 @@ class Listado{
     public $fechaCompra;
     public $idCliente;
     public $nombre;
-    public $producto;
-    public $cantidad;
     public $filas;
     public $username;
     public $creado;
 
-    public $queryParam;
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
@@ -88,6 +85,25 @@ function createName(){
     $stmt->bindParam(':fechaCreacion', $this->fechaCreacion);
     $stmt->bindParam(':nombre', $this->nombre);
 
+
+    //Ejecutamos el script y corroboramos si la query esta OK
+    if($stmt->execute()){
+
+        return true;
+    }
+
+    return false;
+}
+
+function deleteListCompra(){
+    
+    //Insertamos query
+    $query = "DELETE FROM listadoxsubcategoria WHERE idListado = '".$this->idListado."';
+    DELETE FROM listadoxcliente WHERE idListado = '".$this->idListado."';
+    DELETE FROM listados WHERE idListado = '".$this->idListado."';";
+
+    //Preparamos la query
+    $stmt = $this->conn->prepare($query);
 
     //Ejecutamos el script y corroboramos si la query esta OK
     if($stmt->execute()){
@@ -210,23 +226,6 @@ function createCategory($array_cat){
 
 }
 
-function deleteListadoCompra(){
-    
-    //Insertamos query
-    $query = "DELETE FROM listadoxsubcategoria WHERE idListado = '".$this->idListado."';
-    DELETE FROM listadoxcliente WHERE idListado = '".$this->idListado."';
-    DELETE FROM listados WHERE idListado = '".$this->idListado."';";
 
-    //Preparamos la query
-    $stmt = $this->conn->prepare($query);
-
-    //Ejecutamos el script y corroboramos si la query esta OK
-    if($stmt->execute()){
-
-        return true;
-    }
-
-    return false;
-}
 
 ?>
