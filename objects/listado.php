@@ -210,4 +210,23 @@ function createCategory($array_cat){
 
 }
 
+function deleteListadoCompra(){
+    
+    //Insertamos query
+    $query = "DELETE FROM listadoxsubcategoria WHERE idListado = '".$this->idListado."';
+    DELETE FROM listadoxcliente WHERE idListado = '".$this->idListado."';
+    DELETE FROM listados WHERE idListado = '".$this->idListado."';";
+
+    //Preparamos la query
+    $stmt = $this->conn->prepare($query);
+
+    //Ejecutamos el script y corroboramos si la query esta OK
+    if($stmt->execute()){
+
+        return true;
+    }
+
+    return false;
+}
+
 ?>

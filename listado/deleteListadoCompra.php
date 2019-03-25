@@ -13,13 +13,8 @@ include_once '../config/database.php';
 include_once '../objects/listado.php';
 
 //Obtener datos de POST desde un JSON
-$data = json_decode(file_get_contents("php://input"), true);
-//Creamos el vector solamente con los idCat total el idListado es igual para todos
-$array_cat;
-for($i=0;$i<count($data);$i++){
-    $array_cat[$i] = $data[$i]['idCategoria'];
-    
-}
+$data = $_GET['idListado'];
+
 //Corroboramos primero que se hayan ingresados datos
 if($data != NULL){
     //Obtener conexion con DB
@@ -30,17 +25,16 @@ if($data != NULL){
     $listado = new Listado($db);
 
     // Setear valores de listado
-    $listado->idListado = $data[0]['idListado'];
-    $listado->filas = count($data);
-    //var_dump($listado->idListado);
+    $listado->idListado = $data;
+
     //Creamos el listado
-    if($listado->createCategory($array_cat)){
+    if($listado->deleteListadoCompra()){
 
             // set response code
             http_response_code(200);
 
             //Mostramos mensaje
-            echo json_encode($listado->idListado);
+            echo json_encode(array("message" => "Eliminado"));
         
     }
 
@@ -50,12 +44,14 @@ if($data != NULL){
         //Seteamos estado
         http_response_code(400);
 
-        echo json_encode(array("message" => "Categorias repetidas!"));
+        //El listado ya existe
+        echo json_encode(array("message" => "No eliminado"));
     }
 }
 else{
     //Seteamos estado
     http_response_code(400);
-    echo json_encode(array("message" => "Se requieren datos"));
+    //Se requieren datos
+    echo json_encode(array("message" => "No se especifico datos"));
 }
 ?>
