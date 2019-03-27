@@ -1,6 +1,6 @@
 <?php
 
-header("Access-Control-Allow-Origin: http://app-1538168783.000webhostapp.com/api/");
+header("Access-Control-Allow-Origin: http://localhost/api/");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
