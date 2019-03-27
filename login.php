@@ -6,11 +6,11 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
-//Obtener archivos para la conexion
+//Connection files
 include_once 'config/database.php';
 include_once 'objects/cliente.php';
 
-//Generar JWT (JSON web token)
+//Generate JWT (JSON web token)
 include_once 'config/core.php';
 include_once 'libs/php-jwt-master/src/BeforeValidException.php';
 include_once 'libs/php-jwt-master/src/ExpiredException.php';
@@ -19,24 +19,25 @@ include_once 'libs/php-jwt-master/src/JWT.php';
 use \Firebase\JWT\JWT;
 
 
-//Obtener datos de POST desde un JSON
+//POST data from JSON
 $datas = file_get_contents("php://input");
 $data = json_decode($datas);
-//Corroboramos primero que se haya especificado cliente and pass
+
+//If username and password posted
 if($data->username && $data->password){
-    //Obtener conexion con DB
+    //Database connection
     $database = new Database();
     $db = $database->getConnection();
 
-    //Instanciar cliente
+    //Instance client
     $cliente = new cliente($db);
 
-    //Setear valores
+    //Set values
     $cliente->username = $data->username;
     $cliente_exist = $cliente->clientExist();
     
     
-    //Chequeamos si existe cliente y la contra es valida
+    //Check if username and password is correct
     if($cliente_exist && password_verify($data->password, $cliente->password)){
     
         $cliente_name = $cliente->getUsername();
@@ -54,18 +55,17 @@ if($data->username && $data->password){
         );
     
         http_response_code(200);
-        //Generar JWT
+        //Generate JWT
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
                     "username" => $cliente_name,
-                    //"message" => "Login exitoso.",
                     "jwt" => $jwt,
                     "idCliente" => $cliente_id
                 )
             );
     }
-    //Error en login
+    //Error
     else{
     
         http_response_code(401);
