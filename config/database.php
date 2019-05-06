@@ -5,7 +5,7 @@ class Database{
     private $host = "localhost";
     private $db_name = "fastshop";
     private $username = "root";
-    private $password = "";
+    private $password = "root";
 /*
     //Especificamos nuestra Base de Datos y conexion WEB
     private $host = "localhost";
