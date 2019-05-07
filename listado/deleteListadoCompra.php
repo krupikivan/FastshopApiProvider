@@ -29,21 +29,10 @@ if($data != NULL){
 
     //Eliminamos el listado
     if($listado->deleteListCompra()){
-            $list_arr=array();
-     
-            $list_item=array(
-                "idListado" => "",
-                "nombre" => "",
-            );
-            array_push($list_arr, $list_item);
-            //Le tuve q sacar el api key porque no me traia las promociones
-            //array_push($promo_arr["PromocionesVigentes"], $promo_item);
+            //Seteamos estado
+        http_response_code(200);
 
-            // set response code
-            http_response_code(200);
-
-            //Mostramos mensaje
-            echo json_encode($list_arr);
+        echo json_encode(array("message" => "Eliminado"));
         
     }
 
