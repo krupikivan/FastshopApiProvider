@@ -58,12 +58,12 @@ if($data->username && $data->password){
         //Generate JWT
         $jwt = JWT::encode($token, $key);
         echo json_encode(
-                array(
-                    "username" => $cliente_name,
-                    "jwt" => $jwt,
-                    "idCliente" => $cliente_id
-                )
-            );
+            array(
+                "username" => $cliente_name,
+                "token" => $jwt,
+                "idCliente" => (INT)$cliente_id
+            )
+        );
     }
     //Error
     else{
@@ -73,16 +73,4 @@ if($data->username && $data->password){
         echo json_encode(array("message" => "Login error."));
     }
 }
-
-
-
-
-/*//Chequeamos si existe cliente y la contra es valida
-if($cliente_exist && password_verify($data->password, $cliente->password)){
-    $cliente_name = $cliente->getName();
-    http_response_code(200);
-
-    echo json_encode(array("message" => "Login exitoso.", "name" => $cliente_name));
-
-}*/
 ?>
