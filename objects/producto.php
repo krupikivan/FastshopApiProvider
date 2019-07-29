@@ -40,5 +40,20 @@ class Producto{
             return $stmt;
         }
 
+        function readProductList(){
+
+            // select all query
+            $query = "SELECT idProducto, descripcion, precio 
+            FROM " . $this->table_name;
+        
+            // prepare query statement
+            $stmt = $this->conn->prepare($query);
+         
+            // execute query
+            $stmt->execute();
+         
+            return $stmt;
+        }
+
 }
 ?>

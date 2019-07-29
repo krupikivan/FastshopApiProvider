@@ -60,8 +60,8 @@ if($data->username && $data->password){
         echo json_encode(
             array(
                 "username" => $cliente_name,
-                "token" => $jwt,
-                "idCliente" => (INT)$cliente_id
+                "idCliente" => (INT)$cliente_id,
+                "token" => $jwt
             )
         );
     }
