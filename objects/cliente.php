@@ -37,27 +37,21 @@ function create(){
     //Insertamos query
 	$query = "INSERT INTO
     " . $this->table_name . "
-    (`idCliente`, `username`, `apellido`, `email`, `nombre`, `password`, `nroDoc`, `idTipoDocFK`)
+    (`idCliente`, `username`, `email`, `password`)
 VALUES
-    (NULL, '".$this->username."', '".$this->apellido."', '".$this->email."', '".$this->nombre."', '".$password_hash."', '".$this->nroDoc."', 1)";
+    (NULL, '".$this->username."', '".$this->email."', '".$password_hash."')";
 //Preparamos la query
 $stmt = $this->conn->prepare($query);
 
 // sanitize
 $this->username=htmlspecialchars(strip_tags($this->username));
-$this->apellido=htmlspecialchars(strip_tags($this->apellido));
 $this->email=htmlspecialchars(strip_tags($this->email));
-$this->nombre=htmlspecialchars(strip_tags($this->nombre));
 $this->password=htmlspecialchars(strip_tags($this->password));
-$this->nroDoc=htmlspecialchars(strip_tags($this->nroDoc));
 
 // bind the values
 $stmt->bindParam(':username', $this->username);
-$stmt->bindParam(':apellido', $this->apellido);
 $stmt->bindParam(':email', $this->email);
-$stmt->bindParam(':nombre', $this->nombre);
 $stmt->bindParam(':password', $password_hash);
-$stmt->bindParam(':nroDoc', $this->nroDoc);
 
 
 //Ejecutamos el script y corroboramos si la query esta OK
@@ -100,11 +94,8 @@ function clientExist(){
         //Asignamos valores
         $this->idCliente = $row['idCliente'];
         $this->username = $row['username'];
-        $this->apellido = $row['apellido'];
         $this->email = $row['email'];
-        $this->nombre = $row['nombre'];
         $this->password = $row['password'];
-        $this->nroDoc = $row['nroDoc'];
 
 
         // True porque existe en la DB

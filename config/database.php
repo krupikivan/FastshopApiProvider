@@ -1,6 +1,7 @@
 <?php
 class Database{
 
+
     //Especificamos nuestra Base de Datos y conexion LOCAL
     // private $host = "localhost";
     // private $db_name = "fastshop";
