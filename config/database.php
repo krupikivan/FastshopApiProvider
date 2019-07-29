@@ -3,16 +3,16 @@ class Database{
 
 
     //Especificamos nuestra Base de Datos y conexion LOCAL
-    // private $host = "localhost";
-    // private $db_name = "fastshop";
-    // private $username = "root";
-    // private $password = "";
+     private $host = "localhost";
+     private $db_name = "fastshop";
+     private $username = "root";
+     private $password = "";
     
     //BD Herni
-    private $host = "localhost";
-    private $db_name = "fastshop";
-    private $username = "root";
-    private $password = "root"; //no mirar
+    //private $host = "localhost";
+    //private $db_name = "fastshop";
+    //private $username = "root";
+    //private $password = "root"; //no mirar
 /*
     //Especificamos nuestra Base de Datos y conexion WEB
     private $host = "localhost";
