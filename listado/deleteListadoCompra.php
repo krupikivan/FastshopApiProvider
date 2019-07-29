@@ -29,11 +29,10 @@ if($data != NULL){
 
     //Eliminamos el listado
     if($listado->deleteListCompra()){
-            // set response code
-            http_response_code(200);
+            //Seteamos estado
+        http_response_code(200);
 
-            //Mostramos mensaje
-            echo json_encode(array("message" => "Eliminado"));
+        echo json_encode(array("message" => "Eliminado"));
         
     }
 

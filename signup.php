@@ -26,11 +26,8 @@ if($data->email && $data->email){
 
     // Setear valored de cliente
     $cliente->username = $data->username;
-    $cliente->apellido = $data->apellido;
     $cliente->email = $data->email;
-    $cliente->nombre = $data->nombre;
     $cliente->password = $data->password;
-    $cliente->nroDoc = $data->nroDoc;
 
 
     //Creamos el cliente
