@@ -38,7 +38,10 @@ if($num>0){
  
         $list_item=array(
             "idProducto" => (int)$idProducto,
+            "codigo" => (int)$codigo,
             "descripcion" => $descripcion,
+            "categoria" => $categoria,
+            "marca" => $marca,
             "precio" => (double)$precio
         );
         array_push($list_arr, $list_item);

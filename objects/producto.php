@@ -43,8 +43,10 @@ class Producto{
         function readProductList(){
 
             // select all query
-            $query = "SELECT idProducto, descripcion, precio 
-            FROM " . $this->table_name;
+            $query = "SELECT p.idProducto, p.codigo, p.descripcion, c.descripcion as 'categoria', m.nombre as 'marca', p.precio FROM
+    " . $this->table_name . " p
+    JOIN categorias c on c.idCategoria = p.idCategoriaFK 
+    JOIN marcas m on m.idMarca = p.idMarcaFK";
         
             // prepare query statement
             $stmt = $this->conn->prepare($query);
