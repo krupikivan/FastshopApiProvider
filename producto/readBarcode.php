@@ -36,11 +36,11 @@ if($data != NULL){
         // show products data in json format
         echo json_encode(
             array(
-                "idProducto" => $producto->idProducto,
+                "idProducto" => (int) $producto->idProducto,
                 "descripcion" => $producto->descripcion,
                 "categoria" => $producto->categoria,
                 "marca" => $producto->marca,
-                "precio" => $producto->precio,
+                "precio" => (double) $producto->precio,
             )
         );
     }
