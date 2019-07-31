@@ -26,16 +26,6 @@ if($data != NULL){
 
     //Contamos si hay filas encontradas
     $num = $stmt->rowCount();
-    $list_arr=array();
-     
-            $list_item=array(
-                "idProducto" => $producto->idProducto,
-                "descripcion" => $producto->descripcion,
-                "categoria" => $producto->categoria,
-                "marca" => $producto->marca,
-                "precio" => $producto->precio,
-            );
-            array_push($list_arr, $list_item);
 
     // check if more than 0 record found
     if($num>0){
@@ -44,7 +34,15 @@ if($data != NULL){
         http_response_code(200);
     
         // show products data in json format
-        echo json_encode($list_arr);
+        echo json_encode(
+            array(
+                "idProducto" => $producto->idProducto,
+                "descripcion" => $producto->descripcion,
+                "categoria" => $producto->categoria,
+                "marca" => $producto->marca,
+                "precio" => $producto->precio,
+            )
+        );
     }
     else{
     
@@ -52,7 +50,7 @@ if($data != NULL){
         http_response_code(404);
     
         // tell the user no products found
-        echo json_encode($list_arr);
+        echo json_encode(array("message" => "Error."));
     }
 }
 else{
