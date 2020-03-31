@@ -8,7 +8,6 @@ class Cliente{
     private $table_name = "clientes";
 
     public $idCliente;
-    public $username;
     public $apellido;
     public $email;
     public $nombre;
@@ -33,23 +32,27 @@ function create(){
     //Hasheamos la password
     $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
 
-
     //Insertamos query
 	$query = "INSERT INTO
     " . $this->table_name . "
-    (`idCliente`, `username`, `email`, `password`)
+    (`idCliente`,`Apellido`,`Email`,`Nombre`,`TipoDocumento`,`contrasena`,`nroDoc`)
 VALUES
-    (NULL, '".$this->username."', '".$this->email."', '".$password_hash."')";
+    (NULL, '".$this->apellido."', '".$this->email."', '".$this->nombre."','DNI', '".$password_hash."',1111)";
+
+
+
 //Preparamos la query
 $stmt = $this->conn->prepare($query);
 
 // sanitize
-$this->username=htmlspecialchars(strip_tags($this->username));
+$this->nombre=htmlspecialchars(strip_tags($this->nombre));
+$this->apellido=htmlspecialchars(strip_tags($this->apellido));
 $this->email=htmlspecialchars(strip_tags($this->email));
 $this->password=htmlspecialchars(strip_tags($this->password));
 
 // bind the values
-$stmt->bindParam(':username', $this->username);
+$stmt->bindParam(':nombre', $this->nombre);
+$stmt->bindParam(':apellido', $this->apellido);
 $stmt->bindParam(':email', $this->email);
 $stmt->bindParam(':password', $password_hash);
 
@@ -68,34 +71,34 @@ function clientExist(){
     //Chequear si existe el usuario
     $query = "SELECT *
             FROM " . $this->table_name . "
-            WHERE username = '".$this->username."'";
- 
+            WHERE email = '".$this->email."'";
+
     //Preparamos query
     $stmt = $this->conn->prepare( $query );
  
     //Sanitizar
-    $this->username=htmlspecialchars(strip_tags($this->username));
- 
+    $this->email=htmlspecialchars(strip_tags($this->email));
+
     //Enlazamos valores
-    $stmt->bindParam(1, $this->username);
- 
+    $stmt->bindParam(':email', $this->email);
+
     //Ejecutamos query
     $stmt->execute();
  
     //Numero de filas
-    $num = $stmt->rowCount();
+    $num = (int) $stmt->rowCount();
 
     // Si existe asignamos valores al objeto (lo podemos usar para manejo de sesiones)
     if($num>0){
 
         // Traemos valores
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
- 
         //Asignamos valores
         $this->idCliente = $row['idCliente'];
-        $this->username = $row['username'];
-        $this->email = $row['email'];
-        $this->password = $row['password'];
+        $this->nombre = $row['Nombre'];
+        $this->apellido = $row['Apellido'];
+        $this->email = $row['Email'];
+        $this->password = $row['contrasena'];
 
 
         // True porque existe en la DB
@@ -110,9 +113,9 @@ function clientExist(){
 function getIdForUsername($username){
  
     //Chequear si existe el usuario
-    $query = "SELECT idCliente
+    $query = "SELECT UsuarioId
             FROM " . $this->table_name . "
-            WHERE username like '".$username."'";
+            WHERE email like '".$email."'";
  
     //Preparamos query
     $stmt = $this->conn->prepare( $query );
@@ -130,7 +133,7 @@ function getIdForUsername($username){
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
  
         //Asignamos valores
-        $this->idCliente = $row['idCliente'];
+        $this->idCliente = $row['UsuarioId'];
 
         // True porque existe en la DB
         return $this->idCliente;
@@ -140,8 +143,11 @@ function getIdForUsername($username){
     return '';
 }
 
-function getUsername(){
-    return $this->username;
+function getEmail(){
+    return $this->email;
+}
+function getNombre(){
+    return $this->nombre;
 }
 
 function getId(){
@@ -156,7 +162,7 @@ function login(){
             FROM
                 " . $this->table_name . "
             WHERE
-            username='".$this->username."' AND password='".$this->password."'";
+            email='".$this->email."' AND PasswordHash='".$this->password."'";
     //Preparar query statement
     $stmt = $this->conn->prepare($query);
     //Ejecutar query

@@ -23,13 +23,13 @@ class Promocion{
     function read(){
 
     // select all query
-    $query = "SELECT pp.idPromocion, DATE_FORMAT(pp.fechaFin,'%d-%m-%y') as 'fechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'fechaInicio', pr.descripcion AS 'producto', p.descripcion AS 'promocion' 
-                FROM " . $this->table_name . " pp 
-                JOIN promocion p ON p.idTipoPromocion = pp.idTipoPromocion 
-                JOIN productos pr ON pr.idProducto = pp.idProducto 
-                WHERE pp.fechaInicio <= NOW() AND pp.fechaFin > NOW()
-                ORDER BY
-                pp.fechaFin DESC";
+    $query = "SELECT p.idTipoPromocion as 'idPromocion', DATE_FORMAT(pp.fechaFin,'%d-%m-%y') as 'fechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'fechaInicio', pr.descripcion AS 'producto', p.descripcion AS 'promocion' 
+    FROM promocion p 
+    JOIN promocionxproducto pp ON p.idTipoPromocion = pp.IdTipoPromocionFK 
+    JOIN productos pr ON pr.idProducto = pp.IdProductoFK 
+    WHERE pp.fechaInicio <= NOW() AND pp.fechaFin > NOW()
+    ORDER BY
+    pp.fechaFin DESC";
     // prepare query statement
     $stmt = $this->conn->prepare($query);
  

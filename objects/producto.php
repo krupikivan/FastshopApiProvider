@@ -61,12 +61,12 @@ class Producto{
 function getProductScanned(){
 
     //Insertamos query
-	$query = "SELECT p.idProducto, p.descripcion, c.descripcion as 'categoria', m.nombre as 'marca', p.precio FROM
+	$query = "SELECT p.idProducto, p.descripcion, c.descripcion as 'categoria', m.nombre as 'marca', pp.precio FROM
     " . $this->table_name . " p
     JOIN categorias c on c.idCategoria = p.idCategoriaFK 
     JOIN marcas m on m.idMarca = p.idMarcaFK
     WHERE codigo like '".$this->codigo."'";
-
+    
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
 

@@ -1,7 +1,7 @@
 <?php
 
 // required headers
-header("Access-Control-Allow-Origin: http://localhost/api/");
+header("Access-Control-Allow-Origin: http://localhost/FastshopApiProvider/");
 //header("Access-Control-Allow-Origin: http://app-1538168783.000webhostapp.com/api/");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -15,9 +15,8 @@ include_once 'objects/cliente.php';
 
 //Obtener datos de POST desde un JSON
 $data = json_decode(file_get_contents("php://input"));
-
 //Corroboramos primero que se haya especificado cliente and pass
-if($data->email && $data->email){
+if($data->email && $data->password){
     //Obtener conexion con DB
     $database = new Database();
     $db = $database->getConnection();
@@ -26,7 +25,8 @@ if($data->email && $data->email){
     $cliente = new Cliente($db);
 
     // Setear valored de cliente
-    $cliente->username = $data->username;
+    $cliente->nombre = $data->nombre;
+    $cliente->apellido = $data->apellido;
     $cliente->email = $data->email;
     $cliente->password = $data->password;
 

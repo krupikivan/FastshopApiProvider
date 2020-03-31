@@ -1,6 +1,6 @@
 <?php
 
-header("Access-Control-Allow-Origin: http://localhost/api/");
+header("Access-Control-Allow-Origin: http://localhost/FastshopApiProvider/");
 //header("Access-Control-Allow-Origin: http://app-1538168783.000webhostapp.com/api/");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -23,25 +23,25 @@ use \Firebase\JWT\JWT;
 //POST data from JSON
 $datas = file_get_contents("php://input");
 $data = json_decode($datas);
+//If email and password posted
 
-//If username and password posted
-if($data->username && $data->password){
+if($data->email && $data->password){
     //Database connection
     $database = new Database();
     $db = $database->getConnection();
 
     //Instance client
     $cliente = new cliente($db);
-
     //Set values
-    $cliente->username = $data->username;
+    $cliente->email = $data->email;
     $cliente_exist = $cliente->clientExist();
     
     
-    //Check if username and password is correct
+    //Check if email and password is correct
     if($cliente_exist && password_verify($data->password, $cliente->password)){
     
-        $cliente_name = $cliente->getUsername();
+        $cliente_email = $cliente->getEmail();
+        $cliente_name = $cliente->getNombre();
         $cliente_id = $cliente->getId();
         $token = array(
         "iss" => $iss,
@@ -49,7 +49,8 @@ if($data->username && $data->password){
         "iat" => $iat,
         "nbf" => $nbf,
         "data" => array(
-            "username" => $cliente->username,
+            "email" => $cliente->email,
+            "nombre" => $cliente->nombre,
             "password" => $cliente->password,
             "idCliente" => $cliente->idCliente,
         )
@@ -60,7 +61,8 @@ if($data->username && $data->password){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
             array(
-                "username" => $cliente_name,
+                "email" => $cliente_email,
+                "nombre" => $cliente_name,
                 "idCliente" => (INT)$cliente_id,
                 "token" => $jwt
             )

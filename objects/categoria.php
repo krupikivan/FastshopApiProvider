@@ -41,7 +41,7 @@ function readCategoriesList($id){
 
     // select all query
     $query = "SELECT c.descripcion FROM " . $this->table_name . " c 
-    JOIN listadoxsubcategoria ls ON ls.idCategoria = c.idCategoria 
+    JOIN listadoxproductos ls ON ls.idCategoriaFK = c.idCategoria 
     WHERE ls.idListado = '".$id."'";
 
     // prepare query statement

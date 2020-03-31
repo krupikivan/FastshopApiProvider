@@ -32,8 +32,12 @@ if($jwt){
 
         //Mostramos datos de usuario
         echo json_encode(array(
-            "message" => "Acceso garantizado.",
-            "data" => $decoded->data
+            // "message" => "Acceso garantizado.",
+            // "data" => $decoded->data,
+            "email" => $decoded->data->email,
+            "nombre" => $decoded->data->nombre,
+            "token" => $decoded->data->password,
+            "idCliente" => (INT)$decoded->data->idCliente,
         ));
  
     }

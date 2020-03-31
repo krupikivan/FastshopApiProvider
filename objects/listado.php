@@ -4,8 +4,10 @@ class Listado{
  
     // database connection and table name
     private $conn;
-    private $table_name = "listados";
-
+    private $table_listado = "listados";
+    private $table_listado_consumidores = "listadoxconsumidor";
+    private $table_listado_categorias = "listadoxproductos";
+    
  
     // object properties
     public $idListado;
@@ -18,6 +20,7 @@ class Listado{
     public $filas;
     public $username;
     public $creado;
+    public $listadoCategorias;
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -30,7 +33,7 @@ function readData(){
 
     // select all query
     $query = "SELECT li.idListado, li.nombre, p.descripcion AS 'producto', lp.cant AS 'cantidad', c.username as 'cliente' 
-    FROM " . $this->table_name . " li 
+    FROM " . $this->table_listado . " li 
     JOIN listadoxproductos lp ON lp.idListado = li.idListado
     JOIN listadoxcliente lc ON lc.idListado = li.idListado
     JOIN productos p ON p.idProducto = lp.idProducto
@@ -51,11 +54,11 @@ function readData(){
     function readName($username){
 
         // select all query
-        $query = "SELECT li.idListado, li.nombre FROM " . $this->table_name . " li 
-        JOIN listadoxcliente lc ON lc.idListado = li.idListado 
+        $query = "SELECT li.idListado, lc.nombre FROM " . $this->table_listado . " li 
+        JOIN " . $this->table_listado_consumidores . " lc ON lc.idListado = li.idListado 
         JOIN clientes c ON c.idCliente = lc.idCliente 
-        WHERE c.username = '".$username."'";
-    
+        WHERE c.idCliente = '".$username."'";
+
         // prepare query statement
         $stmt = $this->conn->prepare($query);
      
@@ -66,13 +69,13 @@ function readData(){
     }
 
 //Creamos el listado de compras en la tabla listado
-function createName(){
+function createListado(){
 
     //Insertamos query
 	$query = "INSERT INTO
-    " . $this->table_name . "
-    (`idListado`, `fechaCreacion`, `fechaCobro`, `fechaCompra`, `nombre`) VALUES
-    (NULL, curdate(), NULL, NULL, '".$this->nombre."')";
+    " . $this->table_listado . "
+    (`idListado`, `fechaCreacion`, `fechaCobro`, `fechaCompra`, `idCliente`) VALUES
+    (NULL, curdate(), curdate(), curdate(), '".$this->idCliente."')";
 
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
@@ -83,7 +86,9 @@ function createName(){
 
     // bind the values
     $stmt->bindParam(':fechaCreacion', $this->fechaCreacion);
-    $stmt->bindParam(':nombre', $this->nombre);
+    $stmt->bindParam(':fechaCobro', $this->fechaCobro);
+    $stmt->bindParam(':fechaCompra', $this->fechaCompra);
+    $stmt->bindParam(':idCliente', $this->idCliente);
 
 
     //Ejecutamos el script y corroboramos si la query esta OK
@@ -96,12 +101,11 @@ function createName(){
 }
 
 function deleteListCompra(){
-    
     //Insertamos query
-    $query = "DELETE FROM listadoxsubcategoria WHERE idListado = '".$this->idListado."';
-    DELETE FROM listadoxcliente WHERE idListado = '".$this->idListado."';
-    DELETE FROM listados WHERE idListado = '".$this->idListado."';";
-
+    $query = "DELETE FROM " . $this->table_listado_categorias . " WHERE idListado = ".$this->idListado.";
+    DELETE FROM " . $this->table_listado_conssumidores . " WHERE idListado = ".$this->idListado.";
+    DELETE FROM " . $this->table_listado . " WHERE idListado = ".$this->idListado.";";
+var_dump($query);
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
 
@@ -114,14 +118,45 @@ function deleteListCompra(){
     return false;
 }
 
-//Creamos el listadoXCliente
-function createListXClien(){
+//Creamos el listadoxproducto/categoria
+function createListXCategorias(){
 
     //Insertamos query
 	$query = "INSERT INTO
-    listadoxcliente
-    (`idCliente`, `idListado`) VALUES
-    ('".$this->idCliente."', '".$this->idListado."')";
+    " . $this->table_listado_categorias . "
+    (`idListadoxProducto`, `cant`, `escaneado`, `idCategoriaFK`, `idListado`, `idProducto`) VALUES
+    (NULL, 1,0, '".$this->idCategoria."', '".$this->idListado."', 1)";
+
+    var_dump($query);
+    //Preparamos la query
+    $stmt = $this->conn->prepare($query);
+
+    // sanitize
+    $this->idCategoria=htmlspecialchars(strip_tags($this->idCategoria));
+    $this->idListado=htmlspecialchars(strip_tags($this->idListado));
+
+    // bind the values
+    $stmt->bindParam(':idCategoria', $this->idCategoria);
+    $stmt->bindParam(':idListado', $this->idListado);
+
+
+    //Ejecutamos el script y corroboramos si la query esta OK
+    if($stmt->execute()){
+
+        return true;
+    }
+
+    return false;
+}
+
+//Creamos el listadoXCliente
+function createListXConsumidores(){
+
+    //Insertamos query
+	$query = "INSERT INTO
+    " . $this->table_listado_consumidores . "
+    (`idListadoxCliente`, `fechaCobro`, `fechaCompra`, `fechaCreacion`, `idCliente`, `idListado`, `nombre`) VALUES
+    (NULL, curdate(), curdate(), curdate(), '".$this->idCliente."', '".$this->idListado."', '".$this->nombre."')";
 
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
@@ -129,10 +164,12 @@ function createListXClien(){
     // sanitize
     $this->idCliente=htmlspecialchars(strip_tags($this->idCliente));
     $this->idListado=htmlspecialchars(strip_tags($this->idListado));
+    $this->nombre=htmlspecialchars(strip_tags($this->nombre));
 
     // bind the values
     $stmt->bindParam(':idCliente', $this->idCliente);
     $stmt->bindParam(':idListado', $this->idListado);
+    $stmt->bindParam(':nombre', $this->nombre);
 
 
     //Ejecutamos el script y corroboramos si la query esta OK
@@ -146,8 +183,7 @@ function createListXClien(){
 
 function getId(){
     // select all query
-    $query = "SELECT idListado FROM " . $this->table_name . " 
-    WHERE nombre like '".$this->nombre."'";
+    $query = "SELECT LAST_INSERT_ID() as 'idListado' FROM " . $this->table_listado . "";
 
     // prepare query statement
     $stmt = $this->conn->prepare($query);
@@ -174,7 +210,7 @@ function getList(){
 
     //Insertamos query
 	$query = "SELECT * FROM
-    " . $this->table_name . " l
+    " . $this->table_listado . " l
     JOIN listadoxcliente lc on lc.idListado = l.idListado
     JOIN listadoxsubcategoria ls on ls.idListado = l.idListado
     WHERE l.idListado like '".$this->idListado."'";

@@ -14,7 +14,7 @@ $db = $database->getConnection();
 $list = new Listado($db);
 
 //Tomamos el usuario activo dentro de la app
-$username = $_GET['username'];
+$username = $_GET['idCliente'];
 
 // query products
 

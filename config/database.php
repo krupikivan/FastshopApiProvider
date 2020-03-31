@@ -6,7 +6,7 @@ class Database{
      private $host = "localhost";
      private $db_name = "fastshop";
      private $username = "root";
-     private $password = "";
+     private $password = "root";
 
     //BD Herni
     //private $host = "localhost";
@@ -27,7 +27,6 @@ class Database{
     public function getConnection(){
 
         $this->conn = null;
-
         try{
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name,
             $this->username, $this->password);
@@ -37,5 +36,14 @@ class Database{
         }
         return $this->conn;
     } 
+
+    // public function getConnection(){
+
+    //     $this->conn = mysqli_connect($this->host, $this->username, $this->password, $this->db_name) or die (mysqli_connect_error());
+    //     if($this->conn){
+    //         print('Conexion exitosa');
+    //     }
+    //     return $this->conn;
+    // } 
 }
 ?>
