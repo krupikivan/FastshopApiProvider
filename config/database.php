@@ -3,10 +3,10 @@ class Database{
 
 
     //Especificamos nuestra Base de Datos y conexion LOCAL
-     private $host = "localhost";
-     private $db_name = "fastshop";
-     private $username = "root";
-     private $password = "root";
+    //  private $host = "localhost";
+    //  private $db_name = "fastshop";
+    //  private $username = "root";
+    //  private $password = "root";
 
     //BD Herni
     //private $host = "localhost";
@@ -15,10 +15,10 @@ class Database{
     //private $password = "root"; //no mirar
 
     //Especificamos nuestra Base de Datos y conexion WEB
-   /* private $host = "localhost";
-    private $db_name = "id7302635_fastshop";
-    private $username = "id7302635_root";
-    private $password = "root1234";*/
+    private $host = "https://fastshop2020.000webhostapp.com/";
+    private $db_name = 'id15474781_fastshop';
+    private $username = 'admin';
+    private $password = 'vwyjv$BOl3I@YDKQ#YOT';
 
 
     public $conn;
