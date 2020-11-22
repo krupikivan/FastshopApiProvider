@@ -17,7 +17,7 @@ class Database{
     //Especificamos nuestra Base de Datos y conexion WEB
     private $host = "https://fastshop2020.000webhostapp.com/";
     private $db_name = 'id15474781_fastshop';
-    private $username = 'admin';
+    private $username = 'id15474781_admin';
     private $password = 'vwyjv$BOl3I@YDKQ#YOT';
 
 
