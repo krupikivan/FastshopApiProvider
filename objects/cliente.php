@@ -95,10 +95,10 @@ function clientExist(){
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         //Asignamos valores
         $this->idCliente = $row['idCliente'];
-        $this->nombre = $row['Nombre'];
-        $this->apellido = $row['Apellido'];
-        $this->email = $row['Email'];
-        $this->password = $row['contrasena'];
+        $this->nombre = $row['nombre'];
+        $this->apellido = $row['apellido'];
+        $this->email = $row['email'];
+        $this->password = $row['password'];
 
 
         // True porque existe en la DB
