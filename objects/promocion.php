@@ -25,8 +25,8 @@ class Promocion{
     // select all query
     $query = "SELECT p.idTipoPromocion as 'idPromocion', DATE_FORMAT(pp.fechaFin,'%d-%m-%y') as 'fechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'fechaInicio', pr.descripcion AS 'producto', p.descripcion AS 'promocion' 
     FROM promocion p 
-    JOIN promocionxproducto pp ON p.idTipoPromocion = pp.IdTipoPromocionFK 
-    JOIN productos pr ON pr.idProducto = pp.IdProductoFK 
+    JOIN promocionxproducto pp ON p.idTipoPromocion = pp.IdTipoPromocion 
+    JOIN productos pr ON pr.idProducto = pp.IdProducto 
     WHERE pp.fechaInicio <= NOW() AND pp.fechaFin > NOW()
     ORDER BY
     pp.fechaFin DESC";

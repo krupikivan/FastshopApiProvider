@@ -9,6 +9,7 @@ class Cliente{
 
     public $idCliente;
     public $apellido;
+    public $username;
     public $email;
     public $nombre;
     public $password;
@@ -35,9 +36,9 @@ function create(){
     //Insertamos query
 	$query = "INSERT INTO
     " . $this->table_name . "
-    (`idCliente`,`Apellido`,`Email`,`Nombre`,`TipoDocumento`,`contrasena`,`nroDoc`)
+    (`idCliente`,`username`, `apellido`, `email`,`nombre`,`idTipoDocFK`,`password`,`nroDoc`)
 VALUES
-    (NULL, '".$this->apellido."', '".$this->email."', '".$this->nombre."','DNI', '".$password_hash."',1111)";
+    (NULL, '".$this->email."', '".$this->apellido."','".$this->email."', '".$this->nombre."', 1, '".$password_hash."',1111)";
 
 
 
@@ -47,12 +48,14 @@ $stmt = $this->conn->prepare($query);
 // sanitize
 $this->nombre=htmlspecialchars(strip_tags($this->nombre));
 $this->apellido=htmlspecialchars(strip_tags($this->apellido));
+$this->username=htmlspecialchars(strip_tags($this->username));
 $this->email=htmlspecialchars(strip_tags($this->email));
 $this->password=htmlspecialchars(strip_tags($this->password));
 
 // bind the values
 $stmt->bindParam(':nombre', $this->nombre);
 $stmt->bindParam(':apellido', $this->apellido);
+$stmt->bindParam(':username', $this->username);
 $stmt->bindParam(':email', $this->email);
 $stmt->bindParam(':password', $password_hash);
 
@@ -87,7 +90,6 @@ function clientExist(){
  
     //Numero de filas
     $num = (int) $stmt->rowCount();
-
     // Si existe asignamos valores al objeto (lo podemos usar para manejo de sesiones)
     if($num>0){
 
@@ -113,7 +115,7 @@ function clientExist(){
 function getIdForUsername($username){
  
     //Chequear si existe el usuario
-    $query = "SELECT UsuarioId
+    $query = "SELECT idCliente
             FROM " . $this->table_name . "
             WHERE email like '".$email."'";
  
@@ -133,7 +135,7 @@ function getIdForUsername($username){
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
  
         //Asignamos valores
-        $this->idCliente = $row['UsuarioId'];
+        $this->idCliente = $row['idCliente'];
 
         // True porque existe en la DB
         return $this->idCliente;

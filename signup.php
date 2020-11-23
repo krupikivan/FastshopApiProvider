@@ -28,6 +28,7 @@ if($data->email && $data->password){
     $cliente->nombre = $data->nombre;
     $cliente->apellido = $data->apellido;
     $cliente->email = $data->email;
+    $cliente->username = $data->email;
     $cliente->password = $data->password;
 
 
