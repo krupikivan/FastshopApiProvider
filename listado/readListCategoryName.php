@@ -11,14 +11,14 @@ include_once '../objects/categoria.php';
 $database = new Database();
 $db = $database->getConnection();
 // initialize object
-$list = new Categoria($db);
+$cate = new Categoria($db);
 
 //Tomamos el usuario activo dentro de la app
 $id = $_GET['idListado'];
 
 // query category
 
-$stmt = $list->readCategoriesList($id);
+$stmt = $cate->readCategoriesList($id);
 
 $num = $stmt->rowCount();
 
@@ -40,7 +40,7 @@ if($num>0){
         extract($row);
  
         $list_item=array(
-            "descripcion" => $descripcion,
+            "descripcion" => $Descripcion,
         );
         array_push($list_arr, $list_item);
     }

@@ -98,10 +98,10 @@ function getProductScanned(){
  
         //Asignamos valores
         $this->idProducto = $row['idProducto'];
-        $this->descripcion = $row['descripcion'];
+        $this->descripcion = $row['Descripcion'];
         $this->categoria = $row['categoria'];
         $this->marca = $row['marca'];
-        $this->precio = $row['precio'];
+        $this->precio = $row['Precio'];
 
 
         // True porque existe en la DB

@@ -6,7 +6,7 @@ class Listado{
     private $conn;
     private $table_listado = "listados";
     private $table_listado_consumidores = "listadoxconsumidor";
-    private $table_listado_categorias = "listadoxproductos";
+    private $table_listado_productos = "listadoxproductos";
     
  
     // object properties
@@ -101,15 +101,18 @@ function createListado(){
 
 function deleteListCompra(){
     //Insertamos query
-    $query = "DELETE FROM " . $this->table_listado_categorias . " WHERE idListado = ".$this->idListado.";
-    DELETE FROM " . $this->table_listado_conssumidores . " WHERE idListado = ".$this->idListado.";
-    DELETE FROM " . $this->table_listado . " WHERE idListado = ".$this->idListado.";";
-var_dump($query);
+    $query = "DELETE FROM " . $this->table_listado_productos . " WHERE idListado = ".$this->idListado.";";
+    $query2 = "DELETE FROM " . $this->table_listado_conssumidores . " WHERE idListado = ".$this->idListado.";";
+    $query3 = "DELETE FROM " . $this->table_listado . " WHERE idListado = ".$this->idListado.";";
+    // DELETE FROM " . $this->table_listado_conssumidores . " WHERE idListado = ".$this->idListado.";
+    // DELETE FROM " . $this->table_listado . " WHERE idListado = ".$this->idListado.";";
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
+    $stmt2 = $this->conn->prepare($query2);
+    $stmt3 = $this->conn->prepare($query3);
 
     //Ejecutamos el script y corroboramos si la query esta OK
-    if($stmt->execute()){
+    if($stmt->execute() && $stmt2->execute() && $stmt3->execute()){
 
         return true;
     }
@@ -122,7 +125,7 @@ function createListXCategorias(){
 
     //Insertamos query
 	$query = "INSERT INTO
-    " . $this->table_listado_categorias . "
+    " . $this->table_listado_productos . "
     (`idListadoxProducto`, `cant`, `escaneado`, `idCategoriaFK`, `idListado`, `idProducto`) VALUES
     (NULL, 1,0, '".$this->idCategoria."', '".$this->idListado."', 1)";
 
