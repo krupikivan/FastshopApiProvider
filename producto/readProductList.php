@@ -39,7 +39,7 @@ if($num>0){
         $list_item=array(
             "idProducto" => (int)$idProducto,
             "codigo" => (int)$codigo,
-            "descripcion" => $descripcion,
+            "descripcion" => $Descripcion,
             "categoria" => $categoria,
             "marca" => $marca,
             "precio" => (double)$precio

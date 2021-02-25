@@ -38,7 +38,7 @@ if($num>0){
  
         $list_item=array(
             "idCategoria" => $idCategoria,
-            "descripcion" => $descripcion,
+            "descripcion" => $Descripcion,
             "superior" => $superior
         );
         array_push($list_arr, $list_item);

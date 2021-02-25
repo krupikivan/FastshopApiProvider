@@ -40,11 +40,11 @@ if($num>0){
  
         $list_item=array(
             "idProducto" => $idProducto,
-            "codigo" => $codigo,
-            "descripcion" => $descripcion,
+            "codigo" => $Codigo,
+            "descripcion" => $Descripcion,
             "categoria" => $categoria,
             "marca" => $marca,
-            "precio" => $precio
+            "precio" => $Precio
         );
         array_push($list_arr, $list_item);
     }

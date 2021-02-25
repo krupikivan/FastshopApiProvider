@@ -4,7 +4,7 @@ class Producto{
  
     // database connection and table name
     private $conn;
-    private $table_name = "productos";
+    private $table_name = "Productos";
  
     // object properties
     public $idProducto;
@@ -25,11 +25,11 @@ class Producto{
         function readProductsCateg($id){
 
             // select all query
-            $query = "SELECT p.idProducto, p.codigo, p.descripcion, c.descripcion as 'categoria', 
-            m.nombre as 'marca', p.precio 
+            $query = "SELECT p.idProducto, p.Codigo, p.Descripcion, c.Descripcion as 'categoria', 
+            m.Nombre as 'marca', p.Precio 
             FROM " . $this->table_name . " p 
-            JOIN categorias c ON p.idCategoriaFK = c.idCategoria  
-            JOIN marcas m on m.idMarca = p.idMarcaFK WHERE c.idCategoria = '".$id."'";
+            JOIN Categorias c ON p.IdCategoriaFK = c.idCategoria  
+            JOIN Marcas m on m.idMarca = p.IdMarcaFK WHERE c.idCategoria = '".$id."'";
         
             // prepare query statement
             $stmt = $this->conn->prepare($query);
@@ -43,10 +43,10 @@ class Producto{
         function readProductList(){
 
             // select all query
-            $query = "SELECT p.idProducto, p.codigo, p.descripcion, c.descripcion as 'categoria', m.nombre as 'marca', p.precio FROM
+            $query = "SELECT p.idProducto, p.Codigo, p.Descripcion, c.Descripcion as 'categoria', m.Nombre as 'marca', p.Precio FROM
     " . $this->table_name . " p
-    JOIN categorias c on c.idCategoria = p.idCategoriaFK 
-    JOIN marcas m on m.idMarca = p.idMarcaFK";
+    JOIN Categorias c on c.idCategoria = p.IdCategoriaFK 
+    JOIN Marcas m on m.idMarca = p.IdMarcaFK";
         
             // prepare query statement
             $stmt = $this->conn->prepare($query);
@@ -61,11 +61,11 @@ class Producto{
 function getProductScanned(){
 
     //Insertamos query
-	$query = "SELECT p.idProducto, p.descripcion, c.descripcion as 'categoria', m.nombre as 'marca', pp.precio FROM
+	$query = "SELECT p.idProducto, p.Descripcion, c.Descripcion as 'categoria', m.Nombre as 'marca', p.Precio FROM
     " . $this->table_name . " p
-    JOIN categorias c on c.idCategoria = p.idCategoriaFK 
-    JOIN marcas m on m.idMarca = p.idMarcaFK
-    WHERE codigo like '".$this->codigo."'";
+    JOIN Categorias c on c.idCategoria = p.IdCategoriaFK 
+    JOIN Marcas m on m.idMarca = p.IdMarcaFK
+    WHERE Codigo like '".$this->codigo."'";
     
     //Preparamos la query
     $stmt = $this->conn->prepare($query);

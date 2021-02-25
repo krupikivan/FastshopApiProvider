@@ -61,8 +61,8 @@ if($data->email && $data->password){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
             array(
-                "email" => $cliente_email,
-                "nombre" => $cliente_name,
+                "email" => $cliente->email,
+                "nombre" => $cliente->nombre,
                 "idCliente" => (INT)$cliente_id,
                 "token" => $jwt
             )

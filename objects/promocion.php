@@ -4,7 +4,7 @@ class Promocion{
  
     // database connection and table name
     private $conn;
-    private $table_name = "promocionxproducto";
+    private $table_name = "PromocionXProducto";
  
     // object properties
     public $idPromocion;
@@ -23,13 +23,13 @@ class Promocion{
     function read(){
 
     // select all query
-    $query = "SELECT p.idTipoPromocion as 'idPromocion', DATE_FORMAT(pp.fechaFin,'%d-%m-%y') as 'fechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'fechaInicio', pr.descripcion AS 'producto', p.descripcion AS 'promocion' 
-    FROM promocion p 
-    JOIN promocionxproducto pp ON p.idTipoPromocion = pp.IdTipoPromocion 
-    JOIN productos pr ON pr.idProducto = pp.IdProducto 
-    WHERE pp.fechaInicio <= NOW() AND pp.fechaFin > NOW()
+    $query = "SELECT p.idTipoPromocion as 'idPromocion', DATE_FORMAT(pp.FechaFin,'%d-%m-%y') as 'FechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'fechaInicio', pr.descripcion AS 'producto', p.descripcion AS 'promocion' 
+    FROM Promocion p 
+    JOIN PromocionXProducto pp ON p.idTipoPromocion = pp.IdTipoPromocion 
+    JOIN Productos pr ON pr.idProducto = pp.IdProducto 
+    WHERE pp.FechaInicio <= NOW() AND pp.FechaFin > NOW()
     ORDER BY
-    pp.fechaFin DESC";
+    pp.FechaFin DESC";
     // prepare query statement
     $stmt = $this->conn->prepare($query);
  
@@ -42,13 +42,13 @@ class Promocion{
 function readStream($queryParam){
 
     // select all query
-    $query = "SELECT pp.idPromocion, pp.fechaFin, pp.fechaInicio, pr.descripcion AS 'producto', p.descripcion AS 'promocion' 
+    $query = "SELECT pp.idPromocion, pp.FechaFin, pp.FechaInicio, pr.Descripcion AS 'producto', p.Descripcion AS 'promocion' 
                 FROM " . $this->table_name . " pp 
-                JOIN promocion p ON p.idTipoPromocion = pp.idTipoPromocion 
-                JOIN productos pr ON pr.idProducto = pp.idProducto 
-                WHERE pp.fechaInicio <= NOW() AND pp.fechaFin > NOW() AND p.descripcion LIKE '%".$queryParam."%'
+                JOIN Promocion p ON p.idTipoPromocion = pp.idTipoPromocion 
+                JOIN Productos pr ON pr.idProducto = pp.idProducto 
+                WHERE pp.FechaInicio <= NOW() AND pp.FechaFin > NOW() AND p.Descripcion LIKE '%".$queryParam."%'
                 ORDER BY
-                pp.fechaFin DESC";
+                pp.FechaFin DESC";
     // prepare query statement
     $stmt = $this->conn->prepare($query);
  

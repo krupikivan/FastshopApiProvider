@@ -4,7 +4,7 @@ class Categoria{
  
     // database connection and table name
     private $conn;
-    private $table_name = "categorias";
+    private $table_name = "Categorias";
  
     // object properties
     public $idCategoria;
@@ -22,10 +22,10 @@ class Categoria{
     function read(){
 
     // select all query
-    $query = "SELECT idCategoria, descripcion, idCategoriaSuperiorFK as 'superior'
+    $query = "SELECT idCategoria, Descripcion, IdCategoriaSuperiorFK as 'superior'
                 FROM " . $this->table_name . " 
-                WHERE idCategoriaSuperiorFK is not null
-                ORDER BY descripcion asc";
+                WHERE IdCategoriaSuperiorFK is not null
+                ORDER BY Descripcion asc";
 
     // prepare query statement
     $stmt = $this->conn->prepare($query);
@@ -40,7 +40,7 @@ class Categoria{
 function readCategoriesList($id){
 
     // select all query
-    $query = "SELECT c.descripcion FROM " . $this->table_name . " c 
+    $query = "SELECT c.Descripcion FROM " . $this->table_name . " c 
     JOIN listadoxproductos ls ON ls.idCategoriaFK = c.idCategoria 
     WHERE ls.idListado = '".$id."'";
 
