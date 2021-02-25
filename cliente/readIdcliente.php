@@ -14,14 +14,14 @@ $db = $database->getConnection();
 $Cli = new Cliente($db);
 
 //Tomamos el usuario activo dentro de la app
-$username = $_GET['email'];
+$email = $_GET['email'];
 
 // query products
 
-$id = $Cli->getIdForUsername($username);
+$id = $Cli->getIdForEmail($email);
 
 // check if more than 0 record found
-if($id != NULL){
+if($id != ''){
      
     // set response code - 200 OK
     http_response_code(200);
@@ -37,7 +37,7 @@ else{
  
     // tell the user no products found
     echo json_encode(
-        array("message" => "No se encontraron listados del cliente")
+        array("message" => "El cliente no existe")
     );
 }
 ?>

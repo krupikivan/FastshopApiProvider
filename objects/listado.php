@@ -18,7 +18,6 @@ class Listado{
     public $idCliente;
     public $nombre;
     public $filas;
-    public $username;
     public $creado;
     public $listadoCategorias;
 
@@ -32,13 +31,13 @@ class Listado{
 function readData(){
 
     // select all query
-    $query = "SELECT li.idListado, li.nombre, p.descripcion AS 'producto', lp.cant AS 'cantidad', c.username as 'cliente' 
+    $query = "SELECT li.idListado, li.nombre, p.descripcion AS 'producto', lp.cant AS 'cantidad', c.email as 'cliente' 
     FROM " . $this->table_listado . " li 
     JOIN listadoxproductos lp ON lp.idListado = li.idListado
     JOIN listadoxcliente lc ON lc.idListado = li.idListado
     JOIN productos p ON p.idProducto = lp.idProducto
     JOIN clientes c ON c.idCliente = lc.idCliente
-    WHERE c.username like 'admin'
+    WHERE c.email like 'admin'
     ORDER BY li.nombre DESC";
 
     // prepare query statement
@@ -51,13 +50,13 @@ function readData(){
 }
 
     // read list name, client filtering
-    function readName($username){
+    function readName($id){
 
         // select all query
         $query = "SELECT li.idListado, lc.nombre FROM " . $this->table_listado . " li 
         JOIN " . $this->table_listado_consumidores . " lc ON lc.idListado = li.idListado 
         JOIN clientes c ON c.idCliente = lc.idCliente 
-        WHERE c.idCliente = '".$username."'";
+        WHERE c.idCliente = '".$id."'";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);

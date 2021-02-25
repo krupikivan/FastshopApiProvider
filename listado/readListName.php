@@ -14,11 +14,11 @@ $db = $database->getConnection();
 $list = new Listado($db);
 
 //Tomamos el usuario activo dentro de la app
-$username = $_GET['idCliente'];
+$id = $_GET['idCliente'];
 
 // query products
 
-$stmt = $list->readName($username);
+$stmt = $list->readName($id);
 
 $num = $stmt->rowCount();
 
