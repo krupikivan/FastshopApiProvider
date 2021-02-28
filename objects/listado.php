@@ -126,8 +126,8 @@ function createListXCategorias(){
     //Insertamos query
 	$query = "INSERT INTO
     " . $this->table_listado_productos . "
-    (`idListadoxProducto`, `cant`, `escaneado`, `idCategoriaFK`, `idListado`, `idProducto`) VALUES
-    (NULL, 1,0, '".$this->idCategoria."', '".$this->idListado."', 2)";
+    (`idListadoxProducto`, `cant`, `escaneado`, `idCategoriaFK`, `idListado`) VALUES
+    (NULL, 1,0, '".$this->idCategoria."', '".$this->idListado."')";
 
     var_dump($query);
     //Preparamos la query
