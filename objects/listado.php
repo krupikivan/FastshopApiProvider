@@ -102,9 +102,9 @@ function createListado(){
 function deleteListCompra(){
     //Insertamos query
     $query = "DELETE FROM " . $this->table_listado_productos . " WHERE idListado = ".$this->idListado.";";
-    $query2 = "DELETE FROM " . $this->table_listado_conssumidores . " WHERE idListado = ".$this->idListado.";";
+    $query2 = "DELETE FROM " . $this->table_listado_consumidores . " WHERE idListado = ".$this->idListado.";";
     $query3 = "DELETE FROM " . $this->table_listado . " WHERE idListado = ".$this->idListado.";";
-    // DELETE FROM " . $this->table_listado_conssumidores . " WHERE idListado = ".$this->idListado.";
+    // DELETE FROM " . $this->table_listado_consumidores . " WHERE idListado = ".$this->idListado.";
     // DELETE FROM " . $this->table_listado . " WHERE idListado = ".$this->idListado.";";
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
