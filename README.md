@@ -1,6 +1,10 @@
 ***
-# Fastshop API - PHP
+## Fastshop API - PHP
 
 ***
 
-This is our API service create for our Univeristy Final Project.
+This is our API service created for our Univeristy Final Project.
+
+Fastshop Mobile App -----> [APP](https://github.com/krupikivan/FastshopMobileApp)
+
+Fastshop Database SQL -----> [DATABASE](https://github.com/krupikivan/FastshopDataBase)
