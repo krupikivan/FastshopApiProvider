@@ -23,7 +23,7 @@ class Promocion{
     function read(){
 
     // select all query
-    $query = "SELECT IdPromocion, DATE_FORMAT(pp.FechaFin,'%d-%m-%y') as 'FechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'FechaInicio', pr.Descripcion AS 'producto', p.Descripcion AS 'promocion' 
+    $query = "SELECT IdPromocion, DATE_FORMAT(pp.FechaFin,'%d-%m-%y') as 'FechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'FechaInicio', pr.Descripcion AS 'producto', p.Descripcion AS 'promocion', pr.IdProducto 
     FROM Promocion p 
     JOIN PromocionXProducto pp ON p.IdTipoPromocion = pp.IdTipoPromocionFK 
     JOIN Productos pr ON pr.IdProducto = pp.IdProductoFK 

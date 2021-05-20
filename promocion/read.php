@@ -37,7 +37,8 @@ if($num>0){
         extract($row);
  
         $promo_item=array(
-            "idPromocion" => $IdPromocion,
+            "idPromocion" => (int) $IdPromocion,
+            "IdProducto" => (int) $IdProducto,
             "fechaFin" => $FechaFin,
             "fechaInicio" => $FechaInicio,
             "producto" => html_entity_decode($producto),
