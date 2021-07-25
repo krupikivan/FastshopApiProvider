@@ -29,7 +29,7 @@ class Promocion{
     JOIN Productos pr ON pr.IdProducto = pp.IdProductoFK 
     WHERE pp.FechaInicio <= NOW() AND pp.FechaFin > NOW()
     ORDER BY
-    IdPromocion ASC";
+    Prioridad ASC";
     // pp.FechaFin DESC";
     // prepare query statement
     $stmt = $this->conn->prepare($query);
