@@ -33,7 +33,6 @@ if($data != NULL){
     // Setear valores de listado
     $listado->idListado = $data[0]['idListado'];
     $listado->filas = count($data);
-    //var_dump($listado->idListado);
     //Creamos el listado
     if($listado->createCategory($array_cat)){
 

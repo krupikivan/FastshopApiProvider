@@ -13,7 +13,8 @@ handlers:
   script: \1
 
 env_variables:
-  MYSQL_HOST: mysql:unix_socket=/cloudsql/fastshop-296500:us-central1:fastshop
+  # MYSQL_HOST: mysql:unix_socket=/cloudsql/fastshop-296500:us-central1:fastshop
+  MYSQL_HOST: localhost
   MYSQL_DB: fastshop_db
   MYSQL_USER: root
   MYSQL_PASS: root1234

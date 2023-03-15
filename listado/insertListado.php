@@ -32,7 +32,6 @@ if($data != NULL){
     $listado->nombre = $data->nombre;
     $listado->listadoCategorias = $array;
 
-
     //Listado de subcategorias
         // $array_cat;
         // for($i=0;$i<count($array);$i++){

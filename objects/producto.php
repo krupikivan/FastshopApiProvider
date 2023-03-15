@@ -77,13 +77,6 @@ function getProductScanned(){
     $this->marca=htmlspecialchars(strip_tags($this->marca));
     $this->precio=htmlspecialchars(strip_tags($this->precio));
 
-    // bind the values
-    $stmt->bindParam(':idProducto', $this->idProducto);
-    $stmt->bindParam(':descripcion', $this->descripcion);
-    $stmt->bindParam(':categoria', $this->categoria);
-    $stmt->bindParam(':marca', $this->marca);
-    $stmt->bindParam(':precio', $this->precio);
-
     //Ejecutamos el script y corroboramos si la query esta OK
     $stmt->execute();
 

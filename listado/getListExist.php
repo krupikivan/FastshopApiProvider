@@ -50,7 +50,7 @@ if($data != NULL){
         http_response_code(200);
     
         // show products data in json format
-        echo json_encode($list_arr)
+        echo json_encode($list_arr);
     }
     
     else{
@@ -59,7 +59,7 @@ if($data != NULL){
         http_response_code(404);
     
         // tell the user no products found
-        echo json_encode($list_arr)
+        echo json_encode($list_arr);
     }
 }
 else{

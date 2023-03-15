@@ -34,12 +34,9 @@ function create(){
     //Insertamos query
 	$query = "INSERT INTO
     " . $this->table_name . "
-    (`idCliente`, `Apellido`, `Email`,`Nombre`,`TipoDocumento`,`contrasena`,`nroDoc`)
+    (`idCliente`, `Apellido`, `Email`,`Nombre`,`TipoDocumento`,`password`,`nroDoc`)
 VALUES
     (NULL, '".$this->apellido."', '".$this->email."', '".$this->nombre."', 'DNI', '".$password_hash."', 1111)";
-
-var_dump($password_hash);
-var_dump($query);
 
 //Preparamos la query
 $stmt = $this->conn->prepare($query);
@@ -52,10 +49,10 @@ $this->email=htmlspecialchars(strip_tags($this->email));
 $this->password=htmlspecialchars(strip_tags($password_hash));
 
 // bind the values
-$stmt->bindParam(':Nombre', $this->nombre);
-$stmt->bindParam(':Apellido', $this->apellido);
-$stmt->bindParam(':Email', $this->email);
-$stmt->bindParam(':contrasena', $password_hash);
+// $stmt->bindParam(':Nombre', $this->nombre);
+// $stmt->bindParam(':Apellido', $this->apellido);
+// $stmt->bindParam(':Email', $this->email);
+// $stmt->bindParam(':password', $password_hash);
 
 
 //Ejecutamos el script y corroboramos si la query esta OK

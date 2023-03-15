@@ -82,17 +82,9 @@ function createListado(){
     // sanitize
     $this->fechaCreacion=htmlspecialchars(strip_tags($this->fechaCreacion));
     $this->nombre=htmlspecialchars(strip_tags($this->nombre));
-
-    // bind the values
-    $stmt->bindParam(':fechaCreacion', $this->fechaCreacion);
-    $stmt->bindParam(':fechaCobro', $this->fechaCobro);
-    $stmt->bindParam(':fechaCompra', $this->fechaCompra);
-    $stmt->bindParam(':idCliente', $this->idCliente);
-
-
+    
     //Ejecutamos el script y corroboramos si la query esta OK
     if($stmt->execute()){
-
         return true;
     }
 
@@ -126,21 +118,15 @@ function createListXCategorias(){
     //Insertamos query
 	$query = "INSERT INTO
     " . $this->table_listado_productos . "
-    (`idListadoxProducto`, `cant`, `escaneado`, `idCategoriaFK`, `idListado`, `idProducto`) VALUES
-    (NULL, 1,0, '".$this->idCategoria."', '".$this->idListado."', 2)";
+    (`idListadoxProducto`, `cant`, `escaneado`, `idCategoriaFK`, `idListado`) VALUES
+    (NULL, 1,0, '".$this->idCategoria."', '".$this->idListado."')";
 
-    var_dump($query);
     //Preparamos la query
     $stmt = $this->conn->prepare($query);
 
     // sanitize
     $this->idCategoria=htmlspecialchars(strip_tags($this->idCategoria));
     $this->idListado=htmlspecialchars(strip_tags($this->idListado));
-
-    // bind the values
-    $stmt->bindParam(':idCategoria', $this->idCategoria);
-    $stmt->bindParam(':idListado', $this->idListado);
-
 
     //Ejecutamos el script y corroboramos si la query esta OK
     if($stmt->execute()){
@@ -167,12 +153,6 @@ function createListXConsumidores(){
     $this->idCliente=htmlspecialchars(strip_tags($this->idCliente));
     $this->idListado=htmlspecialchars(strip_tags($this->idListado));
     $this->nombre=htmlspecialchars(strip_tags($this->nombre));
-
-    // bind the values
-    $stmt->bindParam(':idCliente', $this->idCliente);
-    $stmt->bindParam(':idListado', $this->idListado);
-    $stmt->bindParam(':nombre', $this->nombre);
-
 
     //Ejecutamos el script y corroboramos si la query esta OK
     if($stmt->execute()){
@@ -225,7 +205,6 @@ function getList(){
 
     // bind the values
     $stmt->bindParam(':nombre', $this->nombre);
-
 
     //Ejecutamos el script y corroboramos si la query esta OK
     $stmt->execute();
