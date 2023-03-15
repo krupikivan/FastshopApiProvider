@@ -9,10 +9,14 @@ class Database{
 
     public function __construct()
     {
-        $this->host = 'localhost';
-        $this->db_name = 'fastshop_db';
-        $this->username = 'root';
-        $this->password = '';
+        $this->host = 'u6354r3es4optspf.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+        $this->db_name = 'oojft3dn725r957h';
+        $this->username = 'pelcdtuup9y2t0hc';
+        $this->password = 'yeee096bia7k8nyk';
+        // $this->host = 'localhost';
+        // $this->db_name = 'fastshop_db';
+        // $this->username = 'root';
+        // $this->password = '';
         // $this->host = getenv('MYSQL_HOST');
         // $this->db_name = getenv('MYSQL_DB');
         // $this->username = getenv('MYSQL_USER');
