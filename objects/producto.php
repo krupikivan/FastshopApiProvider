@@ -130,17 +130,15 @@ function getTotalPrice(array $productIds){
 }
 
 function getProductsCompra(array $productIds){
-
     // select all query
     $query = "SELECT p.IdProducto, p.Precio, pr.Formula, pp.Stock, pr.CantidadProductos, pr.ProductoAplicado FROM
     " . $this->table_name . " p
     RIGHT OUTER JOIN " . $this->table_name_2 . " pp on p.IdProducto = pp.IdProductoFK 
     RIGHT OUTER JOIN " . $this->table_name_3 . " pr on pr.IdTipoPromocion = pp.IdTipoPromocionFK
     WHERE p.IdProducto in (".implode(',',$productIds).")
-    AND pr.ClasePromocion = 'Producto'
-    OR pr.ClasePromocion IS NULL
-    AND pp.FechaInicio IS NULL
-    OR pp.FechaInicio <= NOW() AND pp.FechaFin > NOW()";
+    AND (pr.ClasePromocion = 'Producto' OR pr.ClasePromocion IS NULL)
+    AND (pp.FechaInicio IS NULL OR pp.FechaInicio <= NOW())
+    AND (pp.FechaFin IS NULL OR pp.FechaFin > NOW())";
 
     // prepare query statement
     $stmt = $this->conn->prepare($query);

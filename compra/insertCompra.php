@@ -74,22 +74,11 @@ if($data != NULL){
                 $compra->descuento = number_format($costWithoutPromotion - $costWithPromotion, 2);
             }
 
-            if($compra->createCompraXProducto()){
-            
-                // set response code
-                http_response_code(200);
-    
-                //Mostramos mensaje
-                echo json_encode(true);
-            }else{
-    
-                //Seteamos estado
-                http_response_code(400);
-        
-                //El listado ya existe
-                echo json_encode(array("message" => "No se pudo cargar"));
-            }
+            $compra->createCompraXProducto();
         }
+
+        http_response_code(200);
+        echo json_encode(true);
     }
     else{
         //Seteamos estado
