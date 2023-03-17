@@ -4,7 +4,9 @@ class Producto{
  
     // database connection and table name
     private $conn;
-    private $table_name = "Productos";
+    private $table_name = "productos";
+    private $table_name_2 = "promocionxproducto";
+    private $table_name_3 = "promocion";
  
     // object properties
     public $idProducto;
@@ -104,6 +106,72 @@ function getProductScanned(){
     // False porque no existe en la DB
     return $stmt;
 }
+
+
+function getTotalPrice(array $productIds){
+
+    //Insertamos query
+	$query = "SELECT sum(Precio) FROM
+    " . $this->table_name . "
+    WHERE IdProducto in (".implode(',',$productIds).")";
+    
+    //Preparamos la query
+    $stmt = $this->conn->prepare($query);
+
+    //Ejecutamos el script y corroboramos si la query esta OK
+    $stmt->execute();
+
+    // Fetch the result
+    $result = $stmt->fetch(PDO::FETCH_NUM);
+
+    $sum = $result[0];
+ 
+    return (float) $sum;
+}
+
+function getProductsCompra(array $productIds){
+
+    // select all query
+    $query = "SELECT p.IdProducto, p.Precio, pr.Formula, pp.Stock, pr.CantidadProductos, pr.ProductoAplicado FROM
+    " . $this->table_name . " p
+    RIGHT OUTER JOIN " . $this->table_name_2 . " pp on p.IdProducto = pp.IdProductoFK 
+    RIGHT OUTER JOIN " . $this->table_name_3 . " pr on pr.IdTipoPromocion = pp.IdTipoPromocionFK
+    WHERE p.IdProducto in (".implode(',',$productIds).")
+    AND pr.ClasePromocion = 'Producto'
+    OR pr.ClasePromocion IS NULL
+    AND pp.FechaInicio IS NULL
+    OR pp.FechaInicio <= NOW() AND pp.FechaFin > NOW()";
+
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+ 
+    // execute query
+    $stmt->execute();
+ 
+    $num = $stmt->rowCount();
+ 
+    $list_arr=array();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        // extract row
+        // this will make $row['name'] to
+        // just $name only
+        extract($row);
+ 
+        $list_item=array(
+            "IdProducto" => (int)$IdProducto,
+            "Precio" => (float)$Precio,
+            "Formula" => (float)$Formula,
+            "CantidadProductos" => (int)$CantidadProductos,
+            "ProductoAplicado" => (int)$ProductoAplicado,
+            "Stock" => (int)$Stock
+        );
+        array_push($list_arr, $list_item);
+    }
+
+    return $list_arr;
+}
+
 
 }
 ?>
