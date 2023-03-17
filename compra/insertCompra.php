@@ -33,59 +33,67 @@ if($data != NULL){
     
     // Get the sum of the prices from $list
     $total = 0;
-    foreach ($list as $item) {
-        $total += $item['Precio'];
-    }
-
     // Setear valored de compra
     $compra->idCliente = $data->idCliente;
-    $compra->total = $total;
     $compra->cantidadTotal = count($array);
 
     // Creamos el compra
-    if($compra->createCompra()){
-        $compra->idCompra = $compra->getId();
+// Create array of Compra
+    $detalles = array();
+    
+    for($i=0;$i<count($list);$i++){
 
-        for($i=0;$i<count($list);$i++){
+        $idProducto = $list[$i]['IdProducto'];
 
-            $compra->idProducto = $list[$i]['IdProducto'];
-
-            // Check how many times is the product in the list
-            $count = 0;
-            foreach ($array as $item) {
-                if ($item == $list[$i]['IdProducto']) {
-                    $count++;
-                }
+        // Check how many times is the product in the list
+        $count = 0;
+        foreach ($array as $item) {
+            if ($item == $list[$i]['IdProducto']) {
+                $count++;
             }
-            
-            $compra->cantidad = $count;
-            $price = floatval($list[$i]['Precio']);
-            $compra->precio = $price;
-
-            $formula = $list[$i]['Formula'];
-            $countPurchase = $list[$i]['CantidadProductos'];
-            if ($formula > 0) {
-                $promotionCount = floor($count / $countPurchase);
-
-                $costWithoutPromotion = $price * $count;
-
-                $costWithPromotion = ($count - $promotionCount) * $price + $promotionCount * $price * $formula;
-
-                $compra->descuento = number_format($costWithoutPromotion - $costWithPromotion, 2);
-            }
-
-            $compra->createCompraXProducto();
         }
+        
+        $price = floatval($list[$i]['Precio']); // 10
 
-        http_response_code(200);
-        echo json_encode(true);
+        $formula = $list[$i]['Formula'];
+        $countPurchase = $list[$i]['CantidadProductos']; // 2
+        if ($formula > 0) {
+            $promotionCount = floor($count / $countPurchase); // 2
+
+            $costWithoutPromotion = $price * $count; // 40
+
+            $priceOnlyPromo = $promotionCount * $price;
+
+            $countLeftProduct = $count - ($promotionCount * $countPurchase);
+
+            $priceLeftProduct = $countLeftProduct * $price;
+
+            $costWithPromotion = $priceOnlyPromo + $priceLeftProduct;
+
+            $discount = number_format($costWithoutPromotion - $costWithPromotion, 2);
+        }
+        $total = $total + $costWithPromotion;
+        $item=array(
+            "idProducto" => (int) $idProducto,
+            "descuento" => (double) $discount,
+            "cantidad" => (int) $count,
+            "precio" => (double) $price
+        );
+        array_push($detalles, $item);
     }
-    else{
-        //Seteamos estado
-        http_response_code(400);
-        //Se requieren datos
-        echo json_encode(array("message" => "Error"));
+    $compra->total = $total;
+    $compra->createCompra();
+    $compra->idCompra = $compra->getId();
+    // Loop through the array of Compra
+    foreach ($detalles as $item) {
+        $compra->idProducto = $item['idProducto'];
+        $compra->descuento = $item['descuento'];
+        $compra->cantidad = $item['cantidad'];
+        $compra->precio = $item['precio'];
+        $compra->createCompraXProducto();
     }
+    http_response_code(200);
+    echo json_encode(true);
 }
 else{
     //Seteamos estado

@@ -8,17 +8,19 @@ class Compra{
     private $table_name_2 = "comprasxproducto";
  
     // object properties
-    public $idCompra;
     public $fechaCompra;
     public $idCliente;
-    public $idProducto;
-    public $descuento;
     public $total;
-    public $cantidad;
     public $cantidadTotal;
+    
+    // Detalle
+    public $idCompra;
+    public $idProducto;
+    public $cantidad;
+    public $descuento;
     public $precio;
+
     public $idsearch;
-    public $compraProductos;
 
     public $queryParam;
     // constructor with $db as database connection
