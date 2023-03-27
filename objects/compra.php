@@ -111,5 +111,21 @@ class Compra{
         return $IdCompra;
     }
 
+    function readCompra($id){
+
+        // select all query
+        $query = "SELECT p.Descripcion, cc.descuento, cc.precio, cc.cantidad FROM " . $this->table_name_2 . " cc 
+        JOIN productos p ON p.IdProducto = cc.IdProducto 
+        WHERE cc.IdCompra = '".$id."'";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+     
+        // execute query
+        $stmt->execute();
+     
+        return $stmt;
+    }
+
 }
 ?>
