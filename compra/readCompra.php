@@ -44,6 +44,7 @@ if($num>0){
             "precio" => $precio,
             "cantidad" => $cantidad,
             "descuento" => $descuento,
+            "totalCompra" => (double) $totalCompra,
         );
         array_push($list_arr, $list_item);
     }
@@ -62,7 +63,7 @@ else{
  
     // tell the user no products found
     echo json_encode(
-        array("message" => "No se encontraron categories del listado")
+        array("message" => "No hay datos")
     );
 }
 ?>

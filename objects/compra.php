@@ -114,8 +114,9 @@ class Compra{
     function readCompra($id){
 
         // select all query
-        $query = "SELECT p.Descripcion, cc.descuento, cc.precio, cc.cantidad FROM " . $this->table_name_2 . " cc 
+        $query = "SELECT c.total as 'totalCompra', p.Descripcion, cc.descuento, cc.precio, cc.cantidad FROM " . $this->table_name_2 . " cc 
         JOIN productos p ON p.IdProducto = cc.IdProducto 
+        JOIN " . $this->table_name . " c ON c.IdCompra = cc.IdCompra 
         WHERE cc.IdCompra = '".$id."'";
     
         // prepare query statement
