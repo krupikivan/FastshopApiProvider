@@ -17,14 +17,14 @@ class Database{
         // $this->db_name = 'fastshop_db';
         // $this->username = 'root';
         // $this->password = '';
-        $this->host = '192.168.1.153:3306';
-        $this->db_name = 'fastshop_db';
-        $this->username = 'root';
-        $this->password = 'root';
-        // $this->host = getenv('MYSQL_HOST');
-        // $this->db_name = getenv('MYSQL_DB');
-        // $this->username = getenv('MYSQL_USER');
-        // $this->password = getenv('MYSQL_PASS');
+        // $this->host = '192.168.1.153:3306';
+        // $this->db_name = 'fastshop_db';
+        // $this->username = 'root';
+        // $this->password = 'root';
+        $this->host = getenv('MYSQL_HOST');
+        $this->db_name = getenv('MYSQL_DB');
+        $this->username = getenv('MYSQL_USER');
+        $this->password = getenv('MYSQL_PASS');
     }
 
 
