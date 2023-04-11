@@ -9,22 +9,17 @@ class Database{
 
     public function __construct()
     {
-        // $this->host = 'u6354r3es4optspf.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
-        // $this->db_name = 'oojft3dn725r957h';
-        // $this->username = 'pelcdtuup9y2t0hc';
-        // $this->password = 'yeee096bia7k8nyk';
-        // $this->host = 'localhost';
-        // $this->db_name = 'fastshop_db';
-        // $this->username = 'root';
-        // $this->password = '';
-        // $this->host = '192.168.1.153:3306';
-        // $this->db_name = 'fastshop_db';
-        // $this->username = 'root';
-        // $this->password = 'root';
-        $this->host = getenv('MYSQL_HOST');
-        $this->db_name = getenv('MYSQL_DB');
-        $this->username = getenv('MYSQL_USER');
-        $this->password = getenv('MYSQL_PASS');
+        if(getenv('ENV') == false){
+            $this->host = '192.168.1.153:3306';
+            $this->db_name = 'fastshop_db';
+            $this->username = 'root';
+            $this->password = 'root';
+        }else{
+            $this->host = getenv('MYSQL_HOST');
+            $this->db_name = getenv('MYSQL_DB');
+            $this->username = getenv('MYSQL_USER');
+            $this->password = getenv('MYSQL_PASS');
+        }
     }
 
 
@@ -32,11 +27,9 @@ class Database{
 
     //Obtenemos la conexion a la DB
     public function getConnection(){
-
         $this->conn = null;
         try{
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name,
-            // $this->conn = new PDO($this->host . ";dbname=" . $this->db_name,
             $this->username, $this->password);
             $this->conn->exec("set names utf8");
         }catch(PDOException $exception){

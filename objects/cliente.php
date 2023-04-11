@@ -18,7 +18,6 @@ class Cliente{
     //Constructor con $db como la conexion de DB
     public function __construct($db){
         $this->conn = $db;
-        
     }
 
     //Creamos el cliente que va a utilizar la APP
