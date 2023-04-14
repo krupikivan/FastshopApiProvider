@@ -39,9 +39,12 @@ if($num>0){
         $promo_item=array(
             "idPromocion" => (int) $IdPromocion,
             "IdProducto" => (int) $IdProducto,
+            "IdCategoria" => (int) $IdCategoria,
+            "Prioridad" => (int) $Prioridad,
             "fechaFin" => $FechaFin,
             "fechaInicio" => $FechaInicio,
             "producto" => html_entity_decode($producto),
+            "categoria" => html_entity_decode($categoria),
             "promocion" => html_entity_decode($promocion)
         );
         array_push($promo_arr, $promo_item);
