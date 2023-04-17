@@ -37,6 +37,7 @@ if($data != NULL){
         echo json_encode(
             array(
                 "idProducto" => (int) $producto->idProducto,
+                "idCategoria" => (int) $producto->IdCategoriaFK,
                 "descripcion" => $producto->descripcion,
                 "categoria" => $producto->categoria,
                 "marca" => $producto->marca,

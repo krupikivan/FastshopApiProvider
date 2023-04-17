@@ -10,6 +10,7 @@ class Producto{
  
     // object properties
     public $idProducto;
+    public $IdCategoriaFK;
     public $codigo;
     public $descripcion;
     public $categoria;
@@ -63,7 +64,7 @@ class Producto{
 function getProductScanned(){
 
     //Insertamos query
-	$query = "SELECT p.idProducto, p.Descripcion, c.Descripcion as 'categoria', m.Nombre as 'marca', p.Precio FROM
+	$query = "SELECT p.idProducto, p.Descripcion, p.IdCategoriaFK, c.Descripcion as 'categoria', m.Nombre as 'marca', p.Precio FROM
     " . $this->table_name . " p
     JOIN Categorias c on c.idCategoria = p.IdCategoriaFK 
     JOIN Marcas m on m.idMarca = p.IdMarcaFK
@@ -93,6 +94,7 @@ function getProductScanned(){
  
         //Asignamos valores
         $this->idProducto = $row['idProducto'];
+        $this->IdCategoriaFK = $row['IdCategoriaFK'];
         $this->descripcion = $row['Descripcion'];
         $this->categoria = $row['categoria'];
         $this->marca = $row['marca'];
@@ -133,10 +135,9 @@ function getProductsCompra(array $productIds){
     // select all query
     $query = "SELECT p.IdProducto, p.Precio, pr.Formula, pp.Stock, pr.CantidadProductos, pr.ProductoAplicado FROM
     " . $this->table_name . " p
-    RIGHT OUTER JOIN " . $this->table_name_2 . " pp on p.IdProducto = pp.IdProductoFK 
+    RIGHT OUTER JOIN " . $this->table_name_2 . " pp on (pp.IdProductoFK = p.IdProducto) OR (pp.IdCategoriaFK = p.IdCategoriaFK) 
     RIGHT OUTER JOIN " . $this->table_name_3 . " pr on pr.IdTipoPromocion = pp.IdTipoPromocionFK
     WHERE p.IdProducto in (".implode(',',$productIds).")
-    AND (pr.ClasePromocion = 'Producto' OR pr.ClasePromocion IS NULL)
     AND (pp.FechaInicio IS NULL OR pp.FechaInicio <= NOW())
     AND (pp.FechaFin IS NULL OR pp.FechaFin > NOW())";
 

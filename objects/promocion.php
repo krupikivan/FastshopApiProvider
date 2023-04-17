@@ -11,6 +11,9 @@ class Promocion{
     public $fechaFin;
     public $fechaInicio;
     public $producto;
+    public $CantidadProductos;
+    public $ProductoAplicado;
+    public $Formula;
     public $promocion;
     public $queryParam;
     // constructor with $db as database connection
@@ -23,7 +26,7 @@ class Promocion{
     function read(){
 
     // select all query
-    $query = "SELECT IdPromocion, Prioridad, DATE_FORMAT(pp.FechaFin,'%d-%m-%y') as 'FechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'FechaInicio', pr.Descripcion AS 'producto', c.Descripcion AS 'categoria', p.Descripcion AS 'promocion', pr.IdProducto, c.IdCategoria 
+    $query = "SELECT IdPromocion, CantidadProductos, Formula, ProductoAplicado, Prioridad, DATE_FORMAT(pp.FechaFin,'%d-%m-%y') as 'FechaFin', DATE_FORMAT(pp.fechaInicio,'%d-%m-%y') as 'FechaInicio', pr.Descripcion AS 'producto', c.Descripcion AS 'categoria', p.Descripcion AS 'promocion', pr.IdProducto, c.IdCategoria 
     FROM Promocion p    
     JOIN PromocionXProducto pp ON p.IdTipoPromocion = pp.IdTipoPromocionFK 
     LEFT JOIN Productos pr ON pr.IdProducto = pp.IdProductoFK

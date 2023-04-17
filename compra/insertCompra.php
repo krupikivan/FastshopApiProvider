@@ -58,20 +58,27 @@ if($data != NULL){
         $formula = $list[$i]['Formula'];
         $countPurchase = $list[$i]['CantidadProductos']; // 2
         if ($formula > 0) {
-            $promotionCount = floor($count / $countPurchase); // 2
-
-            $costWithoutPromotion = $price * $count; // 40
-
-            $priceOnlyPromo = $promotionCount * $price;
-
-            $countLeftProduct = $count - ($promotionCount * $countPurchase);
-
-            $priceLeftProduct = $countLeftProduct * $price;
-
-            $costWithPromotion = $priceOnlyPromo + $priceLeftProduct;
-
-            $discount = number_format($costWithoutPromotion - $costWithPromotion, 2);
+            $discountedItemCount = intval($count / $countPurchase) * $countPurchase;
+            $discountedAmount = $discountedItemCount * $price * $formula;
+            $costWithPromotion = $count * $price - $discountedAmount;
+            $discount = number_format($discountedAmount, 2);
         }
+        // if ($formula > 0) {
+        //     $promotionCount = floor($count / $countPurchase); // 2
+
+        //     $costWithoutPromotion = $price * $count; // 40
+
+        //     $priceOnlyPromo = $promotionCount * $price;
+
+        //     $countLeftProduct = $count - ($promotionCount * $countPurchase);
+
+        //     $priceLeftProduct = $countLeftProduct * $price;
+
+        //     $costWithPromotion = $priceOnlyPromo + $priceLeftProduct;
+            
+        //     $discount = number_format($costWithoutPromotion - $costWithPromotion, 4);
+        // }
+
         $total = $total + $costWithPromotion;
         $item=array(
             "idProducto" => (int) $idProducto,

@@ -10,10 +10,10 @@ class Database{
     public function __construct()
     {
         if(getenv('ENV') == false){
-            $this->host = '192.168.1.153:3306';
-            $this->db_name = 'fastshop_db';
-            $this->username = 'root';
-            $this->password = 'root';
+            $this->host = 'u6354r3es4optspf.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+            $this->db_name = 'oojft3dn725r957h';
+            $this->username = 'pelcdtuup9y2t0hc';
+            $this->password = 'yeee096bia7k8nyk';
         }else{
             $this->host = getenv('MYSQL_HOST');
             $this->db_name = getenv('MYSQL_DB');
