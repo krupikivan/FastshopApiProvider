@@ -41,6 +41,7 @@ if($num>0){
  
         $list_item=array(
             "descripcion" => $Descripcion,
+            "idCategoria" => (int) $idCategoria,
         );
         array_push($list_arr, $list_item);
     }

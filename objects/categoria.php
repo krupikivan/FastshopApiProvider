@@ -40,7 +40,7 @@ class Categoria{
 function readCategoriesList($id){
 
     // select all query
-    $query = "SELECT c.Descripcion FROM " . $this->table_name . " c 
+    $query = "SELECT c.Descripcion, c.idCategoria FROM " . $this->table_name . " c 
     JOIN listadoxproductos ls ON ls.idCategoriaFK = c.idCategoria 
     WHERE ls.idListado = '".$id."'";
 
